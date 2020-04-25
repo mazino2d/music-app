@@ -10,14 +10,14 @@ const Header: FC<HeaderProps> = (props: HeaderProps) => (
     <TouchableOpacity>
       <Image
         style={styles.button}
-        source={require('../img/ic_keyboard_arrow_down_white.png')}
+        source={require('../../../img/ic_keyboard_arrow_down_white.png')}
       />
     </TouchableOpacity>
     <Text style={styles.message}>{props.message.toUpperCase()}</Text>
     <TouchableOpacity>
       <Image
         style={styles.button}
-        source={require('../img/ic_queue_music_white.png')}
+        source={require('../../../img/ic_queue_music_white.png')}
       />
     </TouchableOpacity>
   </View>

@@ -11,7 +11,7 @@ const TrackDetails: FC<TrackDetailsProps> = (props: TrackDetailsProps) => (
     <TouchableOpacity>
       <Image
         style={styles.button}
-        source={require('../img/ic_add_circle_outline_white.png')}
+        source={require('../../../img/ic_add_circle_outline_white.png')}
       />
     </TouchableOpacity>
     <View style={styles.detailsWrapper}>
@@ -22,7 +22,7 @@ const TrackDetails: FC<TrackDetailsProps> = (props: TrackDetailsProps) => (
       <View style={styles.moreButton}>
         <Image
           style={styles.moreButtonIcon}
-          source={require('../img/ic_more_horiz_white.png')}
+          source={require('../../../img/ic_more_horiz_white.png')}
         />
       </View>
     </TouchableOpacity>
