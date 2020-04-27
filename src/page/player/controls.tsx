@@ -3,13 +3,14 @@ import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 interface ControlsProps {
   paused: boolean;
-  shuffleOn: boolean;
-  repeatOn: boolean;
-  forwardDisabled: boolean;
+  shuffleOn?: boolean;
+  repeatOn?: boolean;
+  forwardDisabled?: boolean;
+  onPressPlayOrPause: () => void;
+  onPressRepeatOn: () => void;
 }
 
 const Controls: FC<ControlsProps> = (props: ControlsProps) => {
-
   return (
     <View style={styles.container}>
       <TouchableOpacity activeOpacity={0.0}>
@@ -25,21 +26,17 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
         />
       </TouchableOpacity>
       <View style={{width: 20}} />
-      {!props.paused ? (
-        <TouchableOpacity>
-          <View style={styles.playButton}>
+      <TouchableOpacity onPress={props.onPressPlayOrPause}>
+        <View style={styles.playButton}>
+          {!props.paused ? (
             <Image source={require('../../../img/ic_pause_white_48pt.png')} />
-          </View>
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity>
-          <View style={styles.playButton}>
+          ) : (
             <Image
               source={require('../../../img/ic_play_arrow_white_48pt.png')}
             />
-          </View>
-        </TouchableOpacity>
-      )}
+          )}
+        </View>
+      </TouchableOpacity>
       <View style={{width: 20}} />
       <TouchableOpacity disabled={props.forwardDisabled}>
         <Image
@@ -48,7 +45,7 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
         />
       </TouchableOpacity>
       <View style={{width: 40}} />
-      <TouchableOpacity activeOpacity={0.0}>
+      <TouchableOpacity activeOpacity={0.0} onPress={props.onPressRepeatOn}>
         <Image
           style={[styles.secondaryControl, props.repeatOn ? [] : styles.off]}
           source={require('../../../img/ic_repeat_white.png')}

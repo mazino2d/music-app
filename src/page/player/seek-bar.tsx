@@ -1,20 +1,31 @@
 import Slider from '@react-native-community/slider';
+import moment from 'moment';
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
-const SeekBar: FC = () => {
+interface SeekBarProps {
+  duration: number;
+  currentTime: number;
+}
+
+const SeekBar: FC<SeekBarProps> = (props: SeekBarProps) => {
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
-        <Text style={styles.text}>02:05</Text>
+        <Text style={styles.text}>
+          {moment(props.duration * 1000).format('mm:ss')}
+        </Text>
         <View style={{flex: 1}} />
-        <Text style={[styles.text, {width: 40}]}>01:04</Text>
+        <Text style={[styles.text, {width: 40}]}>
+          {moment(props.currentTime * 1000).format('mm:ss')}
+        </Text>
       </View>
       <Slider
-        value={0.7}
+        value={props.currentTime / (props.duration + 1)}
         style={styles.slider}
         minimumTrackTintColor="#fff"
-        maximumTrackTintColor="rgba(255, 255, 255, 0.14)"
+        maximumTrackTintColor="#ffa"
+        thumbTintColor="#fff"
       />
     </View>
   );

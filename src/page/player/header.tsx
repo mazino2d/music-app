@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 interface HeaderProps {
-  message: string;
+  title: string;
 }
 
 const Header: FC<HeaderProps> = (props: HeaderProps) => (
@@ -13,7 +13,7 @@ const Header: FC<HeaderProps> = (props: HeaderProps) => (
         source={require('../../../img/ic_keyboard_arrow_down_white.png')}
       />
     </TouchableOpacity>
-    <Text style={styles.message}>{props.message.toUpperCase()}</Text>
+    <Text style={styles.title}>{props.title.toUpperCase()}</Text>
     <TouchableOpacity>
       <Image
         style={styles.button}
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     flexDirection: 'row',
   },
-  message: {
+  title: {
     flex: 1,
     textAlign: 'center',
     color: 'rgba(255, 255, 255, 0.72)',
