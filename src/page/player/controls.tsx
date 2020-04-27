@@ -8,50 +8,55 @@ interface ControlsProps {
   forwardDisabled: boolean;
 }
 
-const Controls: FC<ControlsProps> = (props: ControlsProps) => (
-  <View style={styles.container}>
-    <TouchableOpacity activeOpacity={0.0}>
-      <Image
-        style={[styles.secondaryControl, props.shuffleOn ? [] : styles.off]}
-        source={require('../../../img/ic_shuffle_white.png')}
-      />
-    </TouchableOpacity>
-    <View style={{width: 40}} />
-    <TouchableOpacity>
-      <Image source={require('../../../img/ic_skip_previous_white_36pt.png')} />
-    </TouchableOpacity>
-    <View style={{width: 20}} />
-    {!props.paused ? (
-      <TouchableOpacity>
-        <View style={styles.playButton}>
-          <Image source={require('../../../img/ic_pause_white_48pt.png')} />
-        </View>
+const Controls: FC<ControlsProps> = (props: ControlsProps) => {
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity activeOpacity={0.0}>
+        <Image
+          style={[styles.secondaryControl, props.shuffleOn ? [] : styles.off]}
+          source={require('../../../img/ic_shuffle_white.png')}
+        />
       </TouchableOpacity>
-    ) : (
+      <View style={{width: 40}} />
       <TouchableOpacity>
-        <View style={styles.playButton}>
-          <Image
-            source={require('../../../img/ic_play_arrow_white_48pt.png')}
-          />
-        </View>
+        <Image
+          source={require('../../../img/ic_skip_previous_white_36pt.png')}
+        />
       </TouchableOpacity>
-    )}
-    <View style={{width: 20}} />
-    <TouchableOpacity disabled={props.forwardDisabled}>
-      <Image
-        style={[props.forwardDisabled && {opacity: 0.3}]}
-        source={require('../../../img/ic_skip_next_white_36pt.png')}
-      />
-    </TouchableOpacity>
-    <View style={{width: 40}} />
-    <TouchableOpacity activeOpacity={0.0}>
-      <Image
-        style={[styles.secondaryControl, props.repeatOn ? [] : styles.off]}
-        source={require('../../../img/ic_repeat_white.png')}
-      />
-    </TouchableOpacity>
-  </View>
-);
+      <View style={{width: 20}} />
+      {!props.paused ? (
+        <TouchableOpacity>
+          <View style={styles.playButton}>
+            <Image source={require('../../../img/ic_pause_white_48pt.png')} />
+          </View>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity>
+          <View style={styles.playButton}>
+            <Image
+              source={require('../../../img/ic_play_arrow_white_48pt.png')}
+            />
+          </View>
+        </TouchableOpacity>
+      )}
+      <View style={{width: 20}} />
+      <TouchableOpacity disabled={props.forwardDisabled}>
+        <Image
+          style={[props.forwardDisabled && {opacity: 0.3}]}
+          source={require('../../../img/ic_skip_next_white_36pt.png')}
+        />
+      </TouchableOpacity>
+      <View style={{width: 40}} />
+      <TouchableOpacity activeOpacity={0.0}>
+        <Image
+          style={[styles.secondaryControl, props.repeatOn ? [] : styles.off]}
+          source={require('../../../img/ic_repeat_white.png')}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default Controls;
 
@@ -60,7 +65,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 8,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
   playButton: {
     height: 72,

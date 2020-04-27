@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     paddingLeft: 16,
     paddingRight: 16,
-    paddingTop: 16,
+    paddingTop: 32,
   },
   text: {
     color: 'rgba(255, 255, 255, 0.72)',

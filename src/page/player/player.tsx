@@ -29,7 +29,7 @@ const Player: FC = () => {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#550000',
+    backgroundColor: '#000000',
   },
   audioElement: {
     height: 0,
