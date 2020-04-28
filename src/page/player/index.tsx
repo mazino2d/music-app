@@ -9,10 +9,10 @@ import TrackDetails from './component/track-details';
 
 export interface PlayerProps {
   title: string;
-  tracks: Tracks[];
+  tracks: Track[];
 }
 
-export interface Tracks {
+export interface Track {
   song: string;
   artist: string;
   artURI: string;

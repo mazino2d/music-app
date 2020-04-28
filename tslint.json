@@ -41,6 +41,7 @@
       ]
     },
     "no-require-imports": false,
+    "no-floating-promises": false,
     "no-boolean-literal-compare": true,
     "no-invalid-this": {
       "options": "check-function-in-method"
