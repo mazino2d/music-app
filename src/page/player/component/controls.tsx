@@ -3,52 +3,51 @@ import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 interface ControlsProps {
   paused: boolean;
-  shuffleOn?: boolean;
-  repeatOn?: boolean;
-  forwardDisabled?: boolean;
+  shuffleOn: boolean;
+  repeatOn: boolean;
   onPressPlayOrPause: () => void;
+  onPressShuffleOn: () => void;
   onPressRepeatOn: () => void;
+  onPressNextTrack: () => void;
+  onPressBackTrack: () => void;
 }
 
 const Controls: FC<ControlsProps> = (props: ControlsProps) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.0}>
+      <TouchableOpacity activeOpacity={0.0} onPress={props.onPressShuffleOn}>
         <Image
           style={[styles.secondaryControl, props.shuffleOn ? [] : styles.off]}
-          source={require('../../../img/ic_shuffle_white.png')}
+          source={require('../../../../img/ic_shuffle_white.png')}
         />
       </TouchableOpacity>
       <View style={{width: 40}} />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.onPressBackTrack}>
         <Image
-          source={require('../../../img/ic_skip_previous_white_36pt.png')}
+          source={require('../../../../img/ic_skip_previous_white_36pt.png')}
         />
       </TouchableOpacity>
       <View style={{width: 20}} />
       <TouchableOpacity onPress={props.onPressPlayOrPause}>
         <View style={styles.playButton}>
           {!props.paused ? (
-            <Image source={require('../../../img/ic_pause_white_48pt.png')} />
+            <Image source={require('../../../../img/ic_pause_white_48pt.png')} />
           ) : (
             <Image
-              source={require('../../../img/ic_play_arrow_white_48pt.png')}
+              source={require('../../../../img/ic_play_arrow_white_48pt.png')}
             />
           )}
         </View>
       </TouchableOpacity>
       <View style={{width: 20}} />
-      <TouchableOpacity disabled={props.forwardDisabled}>
-        <Image
-          style={[props.forwardDisabled && {opacity: 0.3}]}
-          source={require('../../../img/ic_skip_next_white_36pt.png')}
-        />
+      <TouchableOpacity onPress={props.onPressNextTrack}>
+        <Image source={require('../../../../img/ic_skip_next_white_36pt.png')} />
       </TouchableOpacity>
       <View style={{width: 40}} />
       <TouchableOpacity activeOpacity={0.0} onPress={props.onPressRepeatOn}>
         <Image
           style={[styles.secondaryControl, props.repeatOn ? [] : styles.off]}
-          source={require('../../../img/ic_repeat_white.png')}
+          source={require('../../../../img/ic_repeat_white.png')}
         />
       </TouchableOpacity>
     </View>
