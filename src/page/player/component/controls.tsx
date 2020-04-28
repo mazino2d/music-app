@@ -31,7 +31,9 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
       <TouchableOpacity onPress={props.onPressPlayOrPause}>
         <View style={styles.playButton}>
           {!props.paused ? (
-            <Image source={require('../../../../img/ic_pause_white_48pt.png')} />
+            <Image
+              source={require('../../../../img/ic_pause_white_48pt.png')}
+            />
           ) : (
             <Image
               source={require('../../../../img/ic_play_arrow_white_48pt.png')}
@@ -41,7 +43,9 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
       </TouchableOpacity>
       <View style={{width: 20}} />
       <TouchableOpacity onPress={props.onPressNextTrack}>
-        <Image source={require('../../../../img/ic_skip_next_white_36pt.png')} />
+        <Image
+          source={require('../../../../img/ic_skip_next_white_36pt.png')}
+        />
       </TouchableOpacity>
       <View style={{width: 40}} />
       <TouchableOpacity activeOpacity={0.0} onPress={props.onPressRepeatOn}>

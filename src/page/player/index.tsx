@@ -1,31 +1,29 @@
 import React, {FC, useState} from 'react';
 import {StatusBar, View} from 'react-native';
 import Video, {OnLoadData, OnProgressData} from 'react-native-video';
+import {InfoMediaType} from '../../service/song';
 import AlbumArt from './component/album-art';
 import Controls from './component/controls';
 import Header from './component/header';
 import SeekBar from './component/seek-bar';
 import TrackDetails from './component/track-details';
 
+const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/';
+
 export interface PlayerProps {
   title: string;
-  tracks: Track[];
-}
-
-export interface Track {
-  song: string;
-  artist: string;
-  artURI: string;
-  songURI: string;
+  playlist: InfoMediaType[];
 }
 
 const Player: FC<PlayerProps> = (props: PlayerProps) => {
+  if (props.playlist.length === 0) return <></>;
+
   const [paused, setPaused] = useState(true);
   const [shuffleOn, setShuffleOn] = useState(false);
   const [repeatOn, setRepeatOn] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [selectedTrack, setSelectedTrack] = useState(0);
+  const [selectedSong, setSelectedSong] = useState(0);
 
   const onPressPlayOrPause = () => {
     setPaused(!paused);
@@ -41,12 +39,12 @@ const Player: FC<PlayerProps> = (props: PlayerProps) => {
 
   const onPressNextTrack = () => {
     if (shuffleOn) {
-      setSelectedTrack(Math.floor(Math.random() * props.tracks.length));
+      setSelectedSong(Math.floor(Math.random() * props.playlist.length));
     } else {
-      if (selectedTrack === props.tracks.length - 1) {
-        setSelectedTrack(0);
+      if (selectedSong === props.playlist.length - 1) {
+        setSelectedSong(0);
       } else {
-        setSelectedTrack(selectedTrack + 1);
+        setSelectedSong(selectedSong + 1);
       }
     }
 
@@ -56,12 +54,12 @@ const Player: FC<PlayerProps> = (props: PlayerProps) => {
 
   const onPressBackTrack = () => {
     if (shuffleOn) {
-      setSelectedTrack(Math.floor(Math.random() * props.tracks.length));
+      setSelectedSong(Math.floor(Math.random() * props.playlist.length));
     } else {
-      if (selectedTrack === 0) {
-        setSelectedTrack(props.tracks.length - 1);
+      if (selectedSong === 0) {
+        setSelectedSong(props.playlist.length - 1);
       } else {
-        setSelectedTrack(selectedTrack - 1);
+        setSelectedSong(selectedSong - 1);
       }
     }
 
@@ -77,14 +75,14 @@ const Player: FC<PlayerProps> = (props: PlayerProps) => {
     setCurrentTime(Math.floor(data.currentTime));
   };
 
-  const track = props.tracks[selectedTrack];
+  const song = props.playlist[selectedSong];
 
   return (
     <View style={styles.container}>
       <StatusBar hidden />
       <Header title={props.title} />
-      <AlbumArt url={track.artURI} />
-      <TrackDetails title={track.song} artist={track.artist} />
+      <AlbumArt url={`${coverPrefix}${song.cover}`} />
+      <TrackDetails title={song.title} artist={song.listArtist.join(', ')} />
       <SeekBar duration={duration} currentTime={currentTime} />
       <Controls
         paused={paused}
@@ -97,7 +95,7 @@ const Player: FC<PlayerProps> = (props: PlayerProps) => {
         onPressBackTrack={onPressBackTrack}
       />
       <Video
-        source={{uri: track.songURI}}
+        source={{uri: song.link}}
         paused={paused}
         repeat={repeatOn}
         currentTime={currentTime}
