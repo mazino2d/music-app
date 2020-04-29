@@ -4,7 +4,7 @@ import StackNavigator from './navigator/stack';
 import SongApi, {InfoMediaType} from './service/song';
 
 const App: FC = () => {
-  const [playlist, setPlaylist] = useState(new Array<InfoMediaType>());
+  const [playlists, setPlaylists] = useState(new Array<InfoMediaType>());
 
   useEffect(() => {
     (async () => {
@@ -22,13 +22,13 @@ const App: FC = () => {
         1076260759,
       ]);
 
-      setPlaylist(data);
+      setPlaylists(data);
     })();
-  });
+  }, []);
 
   return (
     <NavigationContainer theme={DarkTheme}>
-      <StackNavigator playlists={playlist} />
+      <StackNavigator playlists={playlists} />
     </NavigationContainer>
   );
 };

@@ -1,21 +1,47 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {FC} from 'react';
-import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {InfoMediaType} from '../../service/song';
-import Item from './component/item';
+
+const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/';
 
 export interface HomeProps {
   playlists: InfoMediaType[];
 }
 
 const Home: FC<HomeProps> = (props) => {
+  const navigation = useNavigation();
+
+  const renderItem = () =>
+    props.playlists.map((value: InfoMediaType) => (
+      <TouchableOpacity
+        key={value.idMedia}
+        onPress={() => navigation.navigate(value.title)}>
+        <View style={styles.item}>
+          <Image
+            style={styles.image}
+            source={{uri: `${coverPrefix}${value.cover}`}}
+          />
+          <View>
+            <Text style={styles.title}>{value.title}</Text>
+            <Text style={styles.info}>{value.listArtist.join(', ')}</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    ));
+
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <ScrollView>
-        {props.playlists.map((value: InfoMediaType) => {
-          return <Item key={value.idMedia} playlist={value} />;
-        })}
-      </ScrollView>
+      <ScrollView>{renderItem()}</ScrollView>
     </View>
   );
 };
@@ -28,11 +54,26 @@ const styles = StyleSheet.create({
   item: {
     paddingLeft: 24,
     paddingRight: 24,
+    paddingTop: 10,
+    flex: 1,
+    flexDirection: 'row',
   },
   image: {
     borderRadius: 10,
     width: 64,
     height: 64,
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+  info: {
+    color: '#ffffff',
+    fontSize: 14,
+    marginLeft: 10,
+    marginTop: 10,
   },
 });
 

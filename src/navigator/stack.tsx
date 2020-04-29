@@ -8,10 +8,19 @@ const Stack = createStackNavigator();
 const StackNavigator: FC<HomeProps> = (props) => {
   const renderHome = () => <Home playlists={props.playlists} />;
 
+  const renderItem = () =>
+    props.playlists.map((value) => {
+      return (
+        <Stack.Screen key={value.idMedia} name={value.title}>
+          {() => <Player title="ZMD PLAYER" playlist={[value]} />}
+        </Stack.Screen>
+      );
+    });
+
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={renderHome} />
-      <Stack.Screen name="Player" component={Player} />
+      {renderItem()}
     </Stack.Navigator>
   );
 };

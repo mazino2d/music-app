@@ -40,6 +40,7 @@
         }
       ]
     },
+    "jsx-no-lambda": false,
     "no-require-imports": false,
     "no-floating-promises": false,
     "no-boolean-literal-compare": true,
