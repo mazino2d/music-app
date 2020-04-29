@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {
   Image,
   ScrollView,
@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {InfoMediaType} from '../../service/song';
+import {playlistContext} from '../../store/playlist';
 
 const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/';
 
@@ -17,14 +18,17 @@ export interface HomeProps {
   playlists: InfoMediaType[];
 }
 
-const Home: FC<HomeProps> = (props) => {
+const Home: FC = () => {
   const navigation = useNavigation();
+  const playlistStore = useContext(playlistContext);
 
+  const onPressItem = (index: number) => () => {
+    playlistStore?.setSelectedSong(index);
+    navigation.navigate('Player');
+  };
   const renderItem = () =>
-    props.playlists.map((value: InfoMediaType) => (
-      <TouchableOpacity
-        key={value.idMedia}
-        onPress={() => navigation.navigate(value.title)}>
+    playlistStore?.playlist.map((value: InfoMediaType, index: number) => (
+      <TouchableOpacity key={value.idMedia} onPress={onPressItem(index)}>
         <View style={styles.item}>
           <Image
             style={styles.image}
@@ -54,7 +58,7 @@ const styles = StyleSheet.create({
   item: {
     paddingLeft: 24,
     paddingRight: 24,
-    paddingTop: 10,
+    paddingBottom: 10,
     flex: 1,
     flexDirection: 'row',
   },

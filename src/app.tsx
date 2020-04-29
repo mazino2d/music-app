@@ -1,10 +1,11 @@
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import StackNavigator from './navigator/stack';
 import SongApi, {InfoMediaType} from './service/song';
+import {playlistContext, PlaylistProvider} from './store/playlist';
 
-const App: FC = () => {
-  const [playlists, setPlaylists] = useState(new Array<InfoMediaType>());
+const Main: FC = () => {
+  const playlistStore = useContext(playlistContext);
 
   useEffect(() => {
     (async () => {
@@ -22,15 +23,21 @@ const App: FC = () => {
         1076260759,
       ]);
 
-      setPlaylists(data);
+      playlistStore?.setPlaylist(data);
     })();
   }, []);
 
   return (
     <NavigationContainer theme={DarkTheme}>
-      <StackNavigator playlists={playlists} />
+      <StackNavigator />
     </NavigationContainer>
   );
 };
+
+const App: FC = () => (
+  <PlaylistProvider>
+    <Main />
+  </PlaylistProvider>
+);
 
 export default App;
