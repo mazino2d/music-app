@@ -1,22 +1,22 @@
 import React, {FC} from 'react';
-import {ScrollView, StatusBar, StyleSheet} from 'react-native';
+import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
 import {InfoMediaType} from '../../service/song';
 import Item from './component/item';
 
-interface HomeProps {
+export interface HomeProps {
   playlists: InfoMediaType[];
 }
 
 const Home: FC<HomeProps> = (props) => {
   return (
-    <>
+    <View style={styles.container}>
       <StatusBar hidden />
-      <ScrollView style={styles.container}>
+      <ScrollView>
         {props.playlists.map((value: InfoMediaType) => {
-          return <Item key={value.idMedia} {...value} />;
+          return <Item key={value.idMedia} playlist={value} />;
         })}
       </ScrollView>
-    </>
+    </View>
   );
 };
 

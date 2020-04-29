@@ -16,7 +16,7 @@ export interface PlayerProps {
 }
 
 const Player: FC<PlayerProps> = (props: PlayerProps) => {
-  if (props.playlist.length === 0) return <></>;
+  if (!props.playlist) return <></>;
 
   const [paused, setPaused] = useState(true);
   const [shuffleOn, setShuffleOn] = useState(false);

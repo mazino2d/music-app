@@ -1,5 +1,6 @@
+import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import React, {FC, useEffect, useState} from 'react';
-import Home from './page/home';
+import StackNavigator from './navigator/stack';
 import SongApi, {InfoMediaType} from './service/song';
 
 const App: FC = () => {
@@ -25,8 +26,11 @@ const App: FC = () => {
     })();
   });
 
-  return <Home playlists={playlist} />;
-  // return <Player title="ABC" playlist={playlist} />;
+  return (
+    <NavigationContainer theme={DarkTheme}>
+      <StackNavigator playlists={playlist} />
+    </NavigationContainer>
+  );
 };
 
 export default App;
