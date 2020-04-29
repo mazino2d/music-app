@@ -1,6 +1,5 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useContext} from 'react';
 import {StatusBar, View} from 'react-native';
-import Video, {OnLoadData, OnProgressData} from 'react-native-video';
 import {InfoMediaType} from '../../service/song';
 import {playlistContext} from '../../store/playlist';
 import AlbumArt from './component/album-art';
@@ -20,26 +19,20 @@ const Player: FC = () => {
 
   if (!playlistStore?.playlist) return <></>;
 
-  const [paused, setPaused] = useState(true);
-  const [shuffleOn, setShuffleOn] = useState(false);
-  const [repeatOn, setRepeatOn] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-
   const onPressPlayOrPause = () => {
-    setPaused(!paused);
+    playlistStore?.setPaused(!playlistStore?.paused);
   };
 
   const onPressRepeatOn = () => {
-    setRepeatOn(!repeatOn);
+    playlistStore?.setRepeatOn(!playlistStore?.repeatOn);
   };
 
   const onPressShuffleOn = () => {
-    setShuffleOn(!shuffleOn);
+    playlistStore?.setShuffleOn(!playlistStore?.shuffleOn);
   };
 
   const onPressNextTrack = () => {
-    if (shuffleOn) {
+    if (playlistStore?.shuffleOn) {
       playlistStore?.setSelectedSong(
         Math.floor(Math.random() * playlistStore?.playlist.length),
       );
@@ -51,12 +44,12 @@ const Player: FC = () => {
       }
     }
 
-    setCurrentTime(0);
-    setPaused(false);
+    playlistStore?.setCurrentTime(0);
+    playlistStore?.setPaused(false);
   };
 
   const onPressBackTrack = () => {
-    if (shuffleOn) {
+    if (playlistStore?.shuffleOn) {
       playlistStore?.setSelectedSong(
         Math.floor(Math.random() * playlistStore?.playlist.length),
       );
@@ -68,16 +61,8 @@ const Player: FC = () => {
       }
     }
 
-    setCurrentTime(0);
-    setPaused(false);
-  };
-
-  const onLoadSetDuration = (data: OnLoadData) => {
-    setDuration(Math.floor(data.duration));
-  };
-
-  const onProgressSetCurrentTime = (data: OnProgressData) => {
-    setCurrentTime(Math.floor(data.currentTime));
+    playlistStore?.setCurrentTime(0);
+    playlistStore?.setPaused(false);
   };
 
   const song = playlistStore?.playlist[playlistStore?.selectedSong];
@@ -88,24 +73,19 @@ const Player: FC = () => {
       <Header title="" />
       <AlbumArt url={`${coverPrefix}${song.cover}`} />
       <TrackDetails title={song.title} artist={song.listArtist.join(', ')} />
-      <SeekBar duration={duration} currentTime={currentTime} />
+      <SeekBar
+        duration={playlistStore?.duration}
+        currentTime={playlistStore?.currentTime}
+      />
       <Controls
-        paused={paused}
-        repeatOn={repeatOn}
-        shuffleOn={shuffleOn}
+        paused={playlistStore?.paused}
+        repeatOn={playlistStore?.repeatOn}
+        shuffleOn={playlistStore?.shuffleOn}
         onPressPlayOrPause={onPressPlayOrPause}
         onPressRepeatOn={onPressRepeatOn}
         onPressShuffleOn={onPressShuffleOn}
         onPressNextTrack={onPressNextTrack}
         onPressBackTrack={onPressBackTrack}
-      />
-      <Video
-        source={{uri: song.link}}
-        paused={paused}
-        repeat={repeatOn}
-        currentTime={currentTime}
-        onLoad={onLoadSetDuration}
-        onProgress={onProgressSetCurrentTime}
       />
     </View>
   );

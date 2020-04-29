@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {FC, useContext} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {playlistContext} from '../../../store/playlist';
@@ -6,11 +7,55 @@ const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w96_r1x1_jpeg/';
 
 const Footer: FC = () => {
   const playlistStore = useContext(playlistContext);
+  const navigation = useNavigation();
+
   const song = playlistStore?.playlist[playlistStore.selectedSong];
+
+  const onPressPlayOrPause = () => {
+    playlistStore?.setPaused(!playlistStore?.paused);
+  };
+
+  const onPressNextTrack = () => {
+    if (playlistStore?.shuffleOn) {
+      playlistStore?.setSelectedSong(
+        Math.floor(Math.random() * playlistStore?.playlist.length),
+      );
+    } else {
+      if (playlistStore?.selectedSong === playlistStore?.playlist.length - 1) {
+        playlistStore?.setSelectedSong(0);
+      } else {
+        playlistStore?.setSelectedSong(playlistStore?.selectedSong + 1);
+      }
+    }
+
+    playlistStore?.setCurrentTime(0);
+    playlistStore?.setPaused(false);
+  };
+
+  const onPressBackTrack = () => {
+    if (playlistStore?.shuffleOn) {
+      playlistStore?.setSelectedSong(
+        Math.floor(Math.random() * playlistStore?.playlist.length),
+      );
+    } else {
+      if (playlistStore?.selectedSong === 0) {
+        playlistStore?.setSelectedSong(playlistStore?.playlist.length - 1);
+      } else {
+        playlistStore?.setSelectedSong(playlistStore?.selectedSong - 1);
+      }
+    }
+
+    playlistStore?.setCurrentTime(0);
+    playlistStore?.setPaused(false);
+  };
+
+  const onPressItem = () => {
+    navigation.navigate('Player');
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={onPressItem}>
         <Image
           style={styles.image}
           source={{uri: `${coverPrefix}${song?.cover}`}}
@@ -18,17 +63,17 @@ const Footer: FC = () => {
         <View>
           <Text style={styles.title}>{song?.title}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressBackTrack}>
         <Image
           source={require('../../../../img/ic_skip_previous_white_36pt.png')}
         />
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressPlayOrPause}>
         <View>
-          {true ? (
+          {!playlistStore?.paused ? (
             <Image
               source={require('../../../../img/ic_pause_white_48pt.png')}
             />
@@ -40,7 +85,7 @@ const Footer: FC = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPressNextTrack}>
         <Image
           source={require('../../../../img/ic_skip_next_white_36pt.png')}
         />

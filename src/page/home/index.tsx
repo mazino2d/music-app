@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
 import {InfoMediaType} from '../../service/song';
 import Footer from './component/footer';
-import Item from './component/item';
+import ItemList from './component/item-list';
 
 export interface HomeProps {
   playlists: InfoMediaType[];
@@ -13,7 +13,7 @@ const Home: FC = () => {
     <View style={styles.container}>
       <StatusBar hidden />
       <ScrollView>
-        <Item />
+        <ItemList />
       </ScrollView>
       <Footer />
     </View>

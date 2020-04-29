@@ -7,7 +7,7 @@ import {playlistContext} from '../../../store/playlist';
 
 const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/';
 
-const Item: FC = () => {
+const ItemList: FC = () => {
   const navigation = useNavigation();
   const playlistStore = useContext(playlistContext);
 
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Item;
+export default ItemList;
