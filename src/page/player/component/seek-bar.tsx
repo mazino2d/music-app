@@ -6,6 +6,7 @@ import {StyleSheet, Text, View} from 'react-native';
 interface SeekBarProps {
   duration: number;
   currentTime: number;
+  onTimeChange: (value: number) => void;
 }
 
 const SeekBar: FC<SeekBarProps> = (props: SeekBarProps) => (
@@ -25,6 +26,7 @@ const SeekBar: FC<SeekBarProps> = (props: SeekBarProps) => (
       minimumTrackTintColor="#fff"
       maximumTrackTintColor="#ffa"
       thumbTintColor="#fff"
+      onValueChange={props.onTimeChange}
     />
   </View>
 );

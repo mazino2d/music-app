@@ -1,4 +1,4 @@
-import React, {createContext, FunctionComponent, useState} from 'react';
+import React, {createContext, FunctionComponent, useRef, useState} from 'react';
 import Video, {OnLoadData, OnProgressData} from 'react-native-video';
 import {InfoMediaType} from '../service/song';
 
@@ -17,9 +17,11 @@ interface PlaylistContext {
   setDuration: React.Dispatch<React.SetStateAction<number>>;
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
+  videoRef: React.RefObject<Video>;
 }
 
 export const PlaylistProvider: FunctionComponent = ({children}) => {
+  const videoRef = useRef<Video>(null);
   const initialState: InfoMediaType[] = [];
 
   const [playlist, setPlaylist] = useState(initialState);
@@ -57,14 +59,15 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
         setDuration,
         currentTime,
         setCurrentTime,
+        videoRef,
       }}>
       {children}
       {playlist.length !== 0 ? (
         <Video
+          ref={videoRef}
           source={{uri: song.link}}
           paused={paused}
           repeat={repeatOn}
-          currentTime={currentTime}
           onLoad={onLoadSetDuration}
           onProgress={onProgressSetCurrentTime}
         />
