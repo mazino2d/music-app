@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {FC, useContext} from 'react';
 import {StatusBar, View} from 'react-native';
 import {InfoMediaType} from '../../service/song';
@@ -16,6 +17,7 @@ export interface PlayerProps {
 
 const Player: FC = () => {
   const playlistStore = useContext(playlistContext);
+  const navigation = useNavigation();
 
   if (!playlistStore?.playlist) return <></>;
 
@@ -65,12 +67,16 @@ const Player: FC = () => {
     playlistStore?.setPaused(false);
   };
 
+  const onPressShowLyric = () => {
+    navigation.navigate('Lyric');
+  };
+
   const song = playlistStore?.playlist[playlistStore?.selectedSong];
 
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <Header title="" />
+      <Header title="" onPressShowLyric={onPressShowLyric} />
       <AlbumArt url={`${coverPrefix}${song.cover}`} />
       <TrackDetails title={song.title} artist={song.listArtist.join(', ')} />
       <SeekBar

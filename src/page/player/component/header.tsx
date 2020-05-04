@@ -3,6 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 interface HeaderProps {
   title: string;
+  onPressShowLyric: () => void;
 }
 
 const Header: FC<HeaderProps> = (props: HeaderProps) => (
@@ -14,7 +15,7 @@ const Header: FC<HeaderProps> = (props: HeaderProps) => (
       />
     </TouchableOpacity>
     <Text style={styles.title}>{props.title.toUpperCase()}</Text>
-    <TouchableOpacity>
+    <TouchableOpacity onPress={props.onPressShowLyric}>
       <Image
         style={styles.button}
         source={require('../../../../img/ic_queue_music_white.png')}

@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 interface TrackDetailsProps {
   title: string;
@@ -8,24 +8,24 @@ interface TrackDetailsProps {
 
 const TrackDetails: FC<TrackDetailsProps> = (props: TrackDetailsProps) => (
   <View style={styles.container}>
-    <TouchableOpacity>
+    {/* <TouchableOpacity>
       <Image
         style={styles.button}
         source={require('../../../../img/ic_add_circle_outline_white.png')}
       />
-    </TouchableOpacity>
+    </TouchableOpacity> */}
     <View style={styles.detailsWrapper}>
       <Text style={styles.title}>{props.title}</Text>
       <Text style={styles.artist}>{props.artist}</Text>
     </View>
-    <TouchableOpacity>
+    {/* <TouchableOpacity>
       <View style={styles.moreButton}>
         <Image
           style={styles.moreButtonIcon}
           source={require('../../../../img/ic_more_horiz_white.png')}
         />
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
   </View>
 );
 
