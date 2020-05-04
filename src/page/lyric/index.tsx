@@ -10,7 +10,7 @@ import SongApi, {
 import {playlistContext} from '../../store/playlist';
 
 const Lyric: FC = () => {
-  const scrollViewRef = useRef(null);
+  const scrollViewRef = useRef<ScrollView>(null);
   const [lyric, setLyric] = useState<LyricType>();
   const playlistStore = useContext(playlistContext);
 

@@ -64,6 +64,7 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
       {children}
       {playlist.length !== 0 ? (
         <Video
+          audioOnly
           ref={videoRef}
           source={{uri: song.link}}
           paused={paused}

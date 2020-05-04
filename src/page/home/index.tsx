@@ -12,7 +12,7 @@ const Home: FC = () => {
   return (
     <View style={styles.container}>
       <StatusBar hidden />
-      <ScrollView>
+      <ScrollView style={styles.list}>
         <ItemList />
       </ScrollView>
       <Footer />
@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
+  },
+  list: {
+    marginBottom: 50,
   },
 });
 
