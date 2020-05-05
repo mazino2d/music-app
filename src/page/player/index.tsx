@@ -18,10 +18,7 @@ export interface PlayerProps {
 const Player: FC = () => {
   const playlistStore = useContext(playlistContext);
   if (!playlistStore) return <></>;
-
   const navigation = useNavigation();
-
-  if (!playlistStore.playlist) return <></>;
 
   const onPressPlayOrPause = () => {
     playlistStore.setPaused(!playlistStore.paused);
