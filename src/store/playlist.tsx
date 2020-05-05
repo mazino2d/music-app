@@ -1,6 +1,16 @@
-import React, {createContext, FunctionComponent, useRef, useState} from 'react';
+import React, {
+  createContext,
+  FunctionComponent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Video, {OnLoadData, OnProgressData} from 'react-native-video';
-import {InfoMediaType} from '../service/song';
+import SongApi, {
+  InfoMediaType,
+  LyricSentenceType,
+  LyricType,
+} from '../service/song';
 
 interface PlaylistContext {
   playlist: InfoMediaType[];
@@ -18,6 +28,7 @@ interface PlaylistContext {
   currentTime: number;
   setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   videoRef: React.RefObject<Video>;
+  lyric?: LyricType;
 }
 
 export const PlaylistProvider: FunctionComponent = ({children}) => {
@@ -31,6 +42,24 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
   const [repeatOn, setRepeatOn] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [lyric, setLyric] = useState<LyricType>();
+
+  useEffect(() => {
+    const song: InfoMediaType | undefined = playlist[selectedSong];
+
+    if (song) {
+      (async () => {
+        const data: LyricType = await SongApi.mGet.getLyric(song.idMedia);
+        data.listData.map(
+          (sentense: LyricSentenceType) =>
+            (sentense.listData[0].data =
+              sentense.listData[0].data.charAt(0).toUpperCase() +
+              sentense.listData[0].data.slice(1)),
+        ),
+          setLyric(data);
+      })();
+    }
+  }, [selectedSong]);
 
   const onLoadSetDuration = (data: OnLoadData) => {
     setDuration(Math.floor(data.duration));
@@ -39,8 +68,6 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
   const onProgressSetCurrentTime = (data: OnProgressData) => {
     setCurrentTime(Math.floor(data.currentTime));
   };
-
-  const song = playlist[selectedSong];
 
   return (
     <playlistContext.Provider
@@ -60,13 +87,14 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
         currentTime,
         setCurrentTime,
         videoRef,
+        lyric,
       }}>
       {children}
       {playlist.length !== 0 ? (
         <Video
           audioOnly
           ref={videoRef}
-          source={{uri: song.link}}
+          source={{uri: playlist[selectedSong].link}}
           paused={paused}
           repeat={repeatOn}
           onLoad={onLoadSetDuration}
