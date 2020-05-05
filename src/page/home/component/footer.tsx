@@ -7,46 +7,47 @@ const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w96_r1x1_jpeg/';
 
 const Footer: FC = () => {
   const playlistStore = useContext(playlistContext);
+  if (!playlistStore) return <></>;
   const navigation = useNavigation();
 
-  const song = playlistStore?.playlist[playlistStore.selectedSong];
+  const song = playlistStore.playlist[playlistStore.selectedSong];
 
   const onPressPlayOrPause = () => {
-    playlistStore?.setPaused(!playlistStore?.paused);
+    playlistStore.setPaused(!playlistStore.paused);
   };
 
   const onPressNextTrack = () => {
-    if (playlistStore?.shuffleOn) {
-      playlistStore?.setSelectedSong(
-        Math.floor(Math.random() * playlistStore?.playlist.length),
+    if (playlistStore.shuffleOn) {
+      playlistStore.setSelectedSong(
+        Math.floor(Math.random() * playlistStore.playlist.length),
       );
     } else {
-      if (playlistStore?.selectedSong === playlistStore?.playlist.length - 1) {
-        playlistStore?.setSelectedSong(0);
+      if (playlistStore.selectedSong === playlistStore.playlist.length - 1) {
+        playlistStore.setSelectedSong(0);
       } else {
-        playlistStore?.setSelectedSong(playlistStore?.selectedSong + 1);
+        playlistStore.setSelectedSong(playlistStore.selectedSong + 1);
       }
     }
 
-    playlistStore?.setCurrentTime(0);
-    playlistStore?.setPaused(false);
+    playlistStore.setCurrentTime(0);
+    playlistStore.setPaused(false);
   };
 
   const onPressBackTrack = () => {
-    if (playlistStore?.shuffleOn) {
-      playlistStore?.setSelectedSong(
-        Math.floor(Math.random() * playlistStore?.playlist.length),
+    if (playlistStore.shuffleOn) {
+      playlistStore.setSelectedSong(
+        Math.floor(Math.random() * playlistStore.playlist.length),
       );
     } else {
-      if (playlistStore?.selectedSong === 0) {
-        playlistStore?.setSelectedSong(playlistStore?.playlist.length - 1);
+      if (playlistStore.selectedSong === 0) {
+        playlistStore.setSelectedSong(playlistStore.playlist.length - 1);
       } else {
-        playlistStore?.setSelectedSong(playlistStore?.selectedSong - 1);
+        playlistStore.setSelectedSong(playlistStore.selectedSong - 1);
       }
     }
 
-    playlistStore?.setCurrentTime(0);
-    playlistStore?.setPaused(false);
+    playlistStore.setCurrentTime(0);
+    playlistStore.setPaused(false);
   };
 
   const onPressItem = () => {
@@ -73,7 +74,7 @@ const Footer: FC = () => {
 
       <TouchableOpacity onPress={onPressPlayOrPause}>
         <View>
-          {!playlistStore?.paused ? (
+          {!playlistStore.paused ? (
             <Image
               source={require('../../../../img/ic_pause_white_48pt.png')}
             />
