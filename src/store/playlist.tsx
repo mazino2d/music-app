@@ -17,7 +17,7 @@ interface PlaylistContext {
   selectedSong: number;
   paused: boolean;
   shuffleOn: boolean;
-  repeatOn: boolean;
+  repeatOn: number;
   duration: number;
   currentTime: number;
   videoRef: React.RefObject<Video>;
@@ -40,7 +40,7 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
   const [selectedSong, setSelectedSong] = useState(0);
   const [paused, setPaused] = useState(true);
   const [shuffleOn, setShuffleOn] = useState(false);
-  const [repeatOn, setRepeatOn] = useState(false);
+  const [repeatOn, setRepeatOn] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [lyric, setLyric] = useState<LyricType>();
@@ -75,7 +75,7 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
   };
 
   const onPressRepeatOn = () => {
-    setRepeatOn(!repeatOn);
+    setRepeatOn((repeatOn + 1) % 3);
   };
 
   const onPressShuffleOn = () => {
@@ -146,10 +146,10 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
           ref={videoRef}
           source={{uri: playlist[selectedSong].link}}
           paused={paused}
-          repeat={repeatOn}
+          repeat={repeatOn === 2}
           onLoad={onLoadSetDuration}
           onProgress={onProgressSetCurrentTime}
-          onEnd={onPressNextTrack}
+          onEnd={repeatOn === 1 ? onPressNextTrack : undefined}
         />
       ) : (
         <></>

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   sentense: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 17,
     marginBottom: 10,
   },
 });

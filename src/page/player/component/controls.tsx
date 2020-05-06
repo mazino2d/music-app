@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 interface ControlsProps {
   paused: boolean;
   shuffleOn: boolean;
-  repeatOn: boolean;
+  repeatOn: number;
   onPressPlayOrPause: () => void;
   onPressShuffleOn: () => void;
   onPressRepeatOn: () => void;
@@ -49,11 +49,11 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
         onPress={props.onPressNextTrack}
       />
       <Icon.Button
-        name="repeat"
+        name={props.repeatOn === 2 ? 'repeat-once' : 'repeat'}
         size={20}
         color="#fff"
         backgroundColor="#000"
-        style={{opacity: props.repeatOn ? 1 : 0.3}}
+        style={{opacity: props.repeatOn !== 0 ? 1 : 0.3}}
         onPress={props.onPressRepeatOn}
       />
     </View>
