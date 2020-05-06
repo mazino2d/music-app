@@ -14,21 +14,22 @@ import SongApi, {
 
 interface PlaylistContext {
   playlist: InfoMediaType[];
-  setPlaylist: React.Dispatch<React.SetStateAction<InfoMediaType[]>>;
   selectedSong: number;
-  setSelectedSong: React.Dispatch<React.SetStateAction<number>>;
   paused: boolean;
-  setPaused: React.Dispatch<React.SetStateAction<boolean>>;
   shuffleOn: boolean;
-  setShuffleOn: React.Dispatch<React.SetStateAction<boolean>>;
   repeatOn: boolean;
-  setRepeatOn: React.Dispatch<React.SetStateAction<boolean>>;
   duration: number;
-  setDuration: React.Dispatch<React.SetStateAction<number>>;
   currentTime: number;
-  setCurrentTime: React.Dispatch<React.SetStateAction<number>>;
   videoRef: React.RefObject<Video>;
   lyric?: LyricType;
+  onPressPlayOrPause: () => void;
+  onPressRepeatOn: () => void;
+  onPressShuffleOn: () => void;
+  onPressNextTrack: () => void;
+  onPressBackTrack: () => void;
+  onPressSeek: (value: number) => void;
+  setPlaylist: React.Dispatch<React.SetStateAction<InfoMediaType[]>>;
+  setSelectedSong: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const PlaylistProvider: FunctionComponent = ({children}) => {
@@ -69,25 +70,72 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
     setCurrentTime(Math.floor(data.currentTime));
   };
 
+  const onPressPlayOrPause = () => {
+    setPaused(!paused);
+  };
+
+  const onPressRepeatOn = () => {
+    setRepeatOn(!repeatOn);
+  };
+
+  const onPressShuffleOn = () => {
+    setShuffleOn(!shuffleOn);
+  };
+
+  const onPressNextTrack = () => {
+    if (shuffleOn) {
+      setSelectedSong(Math.floor(Math.random() * playlist.length));
+    } else {
+      if (selectedSong === playlist.length - 1) {
+        setSelectedSong(0);
+      } else {
+        setSelectedSong(selectedSong + 1);
+      }
+    }
+
+    setCurrentTime(0);
+    setPaused(false);
+  };
+
+  const onPressBackTrack = () => {
+    if (shuffleOn) {
+      setSelectedSong(Math.floor(Math.random() * playlist.length));
+    } else {
+      if (selectedSong === 0) {
+        setSelectedSong(playlist.length - 1);
+      } else {
+        setSelectedSong(selectedSong - 1);
+      }
+    }
+
+    setCurrentTime(0);
+    setPaused(false);
+  };
+
+  const onPressSeek = (value: number) => {
+    videoRef.current?.seek(value * (duration + 1));
+  };
+
   return (
     <playlistContext.Provider
       value={{
         playlist,
-        setPlaylist,
         selectedSong,
-        setSelectedSong,
         paused,
-        setPaused,
         shuffleOn,
-        setShuffleOn,
         repeatOn,
-        setRepeatOn,
         duration,
-        setDuration,
         currentTime,
-        setCurrentTime,
         videoRef,
         lyric,
+        onPressPlayOrPause,
+        onPressRepeatOn,
+        onPressShuffleOn,
+        onPressNextTrack,
+        onPressBackTrack,
+        onPressSeek,
+        setPlaylist,
+        setSelectedSong,
       }}>
       {children}
       {playlist.length !== 0 ? (
@@ -99,6 +147,7 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
           repeat={repeatOn}
           onLoad={onLoadSetDuration}
           onProgress={onProgressSetCurrentTime}
+          // onEnd={}
         />
       ) : (
         <></>

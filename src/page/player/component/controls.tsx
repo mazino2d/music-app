@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface ControlsProps {
   paused: boolean;
@@ -15,45 +16,46 @@ interface ControlsProps {
 const Controls: FC<ControlsProps> = (props: ControlsProps) => {
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={0.0} onPress={props.onPressShuffleOn}>
-        <Image
-          style={[styles.secondaryControl, props.shuffleOn ? [] : styles.off]}
-          source={require('../../../../img/ic_shuffle_white.png')}
-        />
-      </TouchableOpacity>
-      <View style={{width: 40}} />
-      <TouchableOpacity onPress={props.onPressBackTrack}>
-        <Image
-          source={require('../../../../img/ic_skip_previous_white_36pt.png')}
-        />
-      </TouchableOpacity>
-      <View style={{width: 20}} />
-      <TouchableOpacity onPress={props.onPressPlayOrPause}>
-        <View style={styles.playButton}>
-          {!props.paused ? (
-            <Image
-              source={require('../../../../img/ic_pause_white_48pt.png')}
-            />
-          ) : (
-            <Image
-              source={require('../../../../img/ic_play_arrow_white_48pt.png')}
-            />
-          )}
-        </View>
-      </TouchableOpacity>
-      <View style={{width: 20}} />
-      <TouchableOpacity onPress={props.onPressNextTrack}>
-        <Image
-          source={require('../../../../img/ic_skip_next_white_36pt.png')}
-        />
-      </TouchableOpacity>
-      <View style={{width: 40}} />
-      <TouchableOpacity activeOpacity={0.0} onPress={props.onPressRepeatOn}>
-        <Image
-          style={[styles.secondaryControl, props.repeatOn ? [] : styles.off]}
-          source={require('../../../../img/ic_repeat_white.png')}
-        />
-      </TouchableOpacity>
+      <Icon.Button
+        name="shuffle"
+        size={20}
+        color="#fff"
+        backgroundColor="#000"
+        style={{opacity: props.shuffleOn ? 1 : 0.3}}
+        onPress={props.onPressShuffleOn}
+      />
+
+      <Icon.Button
+        name="skip-previous"
+        size={35}
+        color="#fff"
+        backgroundColor="#000"
+        onPress={props.onPressBackTrack}
+      />
+
+      <Icon.Button
+        name={props.paused ? 'play' : 'pause'}
+        size={90}
+        color="#fff"
+        backgroundColor="#000"
+        onPress={props.onPressPlayOrPause}
+      />
+
+      <Icon.Button
+        name="skip-next"
+        size={35}
+        color="#fff"
+        backgroundColor="#000"
+        onPress={props.onPressNextTrack}
+      />
+      <Icon.Button
+        name="repeat"
+        size={20}
+        color="#fff"
+        backgroundColor="#000"
+        style={{opacity: props.repeatOn ? 1 : 0.3}}
+        onPress={props.onPressRepeatOn}
+      />
     </View>
   );
 };
@@ -71,21 +73,5 @@ const styles = StyleSheet.create({
     bottom: 0,
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  playButton: {
-    height: 72,
-    width: 72,
-    borderWidth: 1,
-    borderColor: 'white',
-    borderRadius: 72 / 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  secondaryControl: {
-    height: 18,
-    width: 18,
-  },
-  off: {
-    opacity: 0.3,
   },
 });

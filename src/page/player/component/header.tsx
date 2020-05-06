@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface HeaderProps {
   title: string;
@@ -8,19 +9,20 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = (props: HeaderProps) => (
   <View style={styles.container}>
-    <TouchableOpacity>
-      <Image
-        style={styles.button}
-        source={require('../../../../img/ic_keyboard_arrow_down_white.png')}
-      />
-    </TouchableOpacity>
+    <Icon.Button
+      name="chevron-down"
+      size={20}
+      color="#fff"
+      backgroundColor="#000"
+    />
     <Text style={styles.title}>{props.title.toUpperCase()}</Text>
-    <TouchableOpacity onPress={props.onPressShowLyric}>
-      <Image
-        style={styles.button}
-        source={require('../../../../img/ic_queue_music_white.png')}
-      />
-    </TouchableOpacity>
+    <Icon.Button
+      name="card-text-outline"
+      size={20}
+      color="#fff"
+      backgroundColor="#000"
+      onPress={props.onPressShowLyric}
+    />
   </View>
 );
 
@@ -42,6 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   button: {
-    opacity: 0.72,
+    backgroundColor: '#000',
   },
 });

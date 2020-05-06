@@ -1,25 +1,19 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {FC, useContext, useMemo} from 'react';
+import React, {FC} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {InfoMediaType} from '../../../service/song';
-import {playlistContext} from '../../../store/playlist';
 
 const coverPrefix = 'https://photo-resize-zmp3.zadn.vn/w240_r1x1_jpeg/';
 
-const ItemList: FC = () => {
-  const playlistStore = useContext(playlistContext);
-  if (!playlistStore) return <></>;
-  const navigation = useNavigation();
+interface ItemListProps {
+  playlist: InfoMediaType[];
+  onPressItem: (index: number) => () => void;
+}
 
-  const onPressItem = (index: number) => () => {
-    playlistStore?.setSelectedSong(index);
-    navigation.navigate('Player');
-  };
-
-  const renderItemList = useMemo(() => {
-    return playlistStore.playlist.map((value: InfoMediaType, index: number) => (
-      <TouchableOpacity key={value.idMedia} onPress={onPressItem(index)}>
+const ItemList: FC<ItemListProps> = (props) => (
+  <>
+    {props.playlist.map((value: InfoMediaType, index: number) => (
+      <TouchableOpacity key={value.idMedia} onPress={props.onPressItem(index)}>
         <View style={styles.item}>
           <Image
             style={styles.image}
@@ -31,11 +25,9 @@ const ItemList: FC = () => {
           </View>
         </View>
       </TouchableOpacity>
-    ));
-  }, [playlistStore.playlist]);
-
-  return <>{renderItemList}</>;
-};
+    ))}
+  </>
+);
 
 const styles = StyleSheet.create({
   item: {

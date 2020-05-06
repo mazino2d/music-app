@@ -20,58 +20,8 @@ const Player: FC = () => {
   if (!playlistStore) return <></>;
   const navigation = useNavigation();
 
-  const onPressPlayOrPause = () => {
-    playlistStore.setPaused(!playlistStore.paused);
-  };
-
-  const onPressRepeatOn = () => {
-    playlistStore.setRepeatOn(!playlistStore.repeatOn);
-  };
-
-  const onPressShuffleOn = () => {
-    playlistStore.setShuffleOn(!playlistStore.shuffleOn);
-  };
-
-  const onPressNextTrack = () => {
-    if (playlistStore.shuffleOn) {
-      playlistStore.setSelectedSong(
-        Math.floor(Math.random() * playlistStore.playlist.length),
-      );
-    } else {
-      if (playlistStore.selectedSong === playlistStore.playlist.length - 1) {
-        playlistStore.setSelectedSong(0);
-      } else {
-        playlistStore.setSelectedSong(playlistStore.selectedSong + 1);
-      }
-    }
-
-    playlistStore.setCurrentTime(0);
-    playlistStore.setPaused(false);
-  };
-
-  const onPressBackTrack = () => {
-    if (playlistStore.shuffleOn) {
-      playlistStore.setSelectedSong(
-        Math.floor(Math.random() * playlistStore.playlist.length),
-      );
-    } else {
-      if (playlistStore.selectedSong === 0) {
-        playlistStore.setSelectedSong(playlistStore.playlist.length - 1);
-      } else {
-        playlistStore.setSelectedSong(playlistStore.selectedSong - 1);
-      }
-    }
-
-    playlistStore.setCurrentTime(0);
-    playlistStore.setPaused(false);
-  };
-
   const onPressShowLyric = () => {
     navigation.navigate('Lyric');
-  };
-
-  const onTimeChange = (value: number) => {
-    playlistStore.videoRef.current?.seek(value * (playlistStore.duration + 1));
   };
 
   const song = playlistStore.playlist[playlistStore.selectedSong];
@@ -85,17 +35,17 @@ const Player: FC = () => {
       <SeekBar
         duration={playlistStore.duration}
         currentTime={playlistStore.currentTime}
-        onTimeChange={onTimeChange}
+        onTimeChange={playlistStore.onPressSeek}
       />
       <Controls
         paused={playlistStore.paused}
         repeatOn={playlistStore.repeatOn}
         shuffleOn={playlistStore.shuffleOn}
-        onPressPlayOrPause={onPressPlayOrPause}
-        onPressRepeatOn={onPressRepeatOn}
-        onPressShuffleOn={onPressShuffleOn}
-        onPressNextTrack={onPressNextTrack}
-        onPressBackTrack={onPressBackTrack}
+        onPressPlayOrPause={playlistStore.onPressPlayOrPause}
+        onPressRepeatOn={playlistStore.onPressRepeatOn}
+        onPressShuffleOn={playlistStore.onPressShuffleOn}
+        onPressNextTrack={playlistStore.onPressNextTrack}
+        onPressBackTrack={playlistStore.onPressBackTrack}
       />
     </View>
   );

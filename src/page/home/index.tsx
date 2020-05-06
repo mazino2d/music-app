@@ -1,21 +1,42 @@
-import React, {FC} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {FC, useContext} from 'react';
 import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
-import {InfoMediaType} from '../../service/song';
+import {playlistContext} from '../../store/playlist';
 import Footer from './component/footer';
 import ItemList from './component/item-list';
 
-export interface HomeProps {
-  playlists: InfoMediaType[];
-}
-
 const Home: FC = () => {
+  const navigation = useNavigation();
+  const playlistStore = useContext(playlistContext);
+  if (!playlistStore) return <></>;
+
+  const song = playlistStore.playlist[playlistStore.selectedSong];
+  if (!song) return <></>;
+
+  const onPressTitle = () => {
+    navigation.navigate('Player');
+  };
+
+  const onPressItem = (index: number) => () => {
+    playlistStore?.setSelectedSong(index);
+    navigation.navigate('Player');
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar hidden />
       <ScrollView style={styles.list}>
-        <ItemList />
+        <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>
-      <Footer />
+      <Footer
+        title={song.title}
+        url={song.cover}
+        paused={playlistStore.paused}
+        onPressPlayOrPause={playlistStore.onPressPlayOrPause}
+        onPressNextTrack={playlistStore.onPressNextTrack}
+        onPressBackTrack={playlistStore.onPressBackTrack}
+        onPressTitle={onPressTitle}
+      />
     </View>
   );
 };
