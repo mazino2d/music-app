@@ -1,5 +1,5 @@
 {
-  "name": "zmdplayer",
+  "name": "zmd",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -20,6 +20,7 @@
     "axios": "^0.19.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-eject": "^0.1.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
