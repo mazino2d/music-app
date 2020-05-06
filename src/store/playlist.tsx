@@ -63,11 +63,11 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
   }, [selectedSong]);
 
   const onLoadSetDuration = (data: OnLoadData) => {
-    setDuration(Math.floor(data.duration));
+    setDuration(data.duration);
   };
 
   const onProgressSetCurrentTime = (data: OnProgressData) => {
-    setCurrentTime(Math.floor(data.currentTime));
+    setCurrentTime(data.currentTime);
   };
 
   const onPressPlayOrPause = () => {
@@ -149,7 +149,7 @@ export const PlaylistProvider: FunctionComponent = ({children}) => {
           repeat={repeatOn}
           onLoad={onLoadSetDuration}
           onProgress={onProgressSetCurrentTime}
-          // onEnd={}
+          onEnd={onPressNextTrack}
         />
       ) : (
         <></>
