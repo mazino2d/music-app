@@ -1,54 +1,39 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {LyricSentenceType, LyricWordType} from 'src/service/song';
+import {LyricWordType} from 'src/service/song';
+import {Level} from './level';
 import Word from './word';
 
 export interface SentenceProps {
-  sentence: LyricSentenceType;
+  sentence: LyricWordType[];
   isHighlight: boolean;
-  currentTime: number;
+  indexSeek: number;
 }
 
 const Sentence: FC<SentenceProps> = (props) => {
-  let sentenceStyle = styles.normal;
-  if (props.isHighlight) {
-    sentenceStyle = styles.highlight;
-  }
-
   return (
-    <Text style={sentenceStyle}>
-      {props.sentence.listData.map((value: LyricWordType, index: number) => {
-        const isHighlight =
-          props.isHighlight &&
-          props.currentTime <= value.endTime &&
-          props.currentTime >= value.startTime;
+    <Text style={styles.sentense}>
+      {props.sentence.map((value: LyricWordType, index: number) => {
+        let level = Level.LOW;
 
-        return <Word key={index} word={value} isHighlight={isHighlight} />;
+        if (props.isHighlight) {
+          level = Level.MID;
+          if (props.indexSeek === index) level = Level.HIGH;
+        }
+
+        return <Word key={index} word={value.data} level={level} />;
       })}
     </Text>
   );
 };
 
-const shouldComponentUpdate = (
-  prevProps: Readonly<React.PropsWithChildren<SentenceProps>>,
-  nextProps: Readonly<React.PropsWithChildren<SentenceProps>>,
-) => !(prevProps.isHighlight || nextProps.isHighlight);
-
-export default React.memo(Sentence, shouldComponentUpdate);
+export default React.memo(Sentence);
 
 const styles = StyleSheet.create({
-  highlight: {
+  sentense: {
     flex: 1,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 10,
-    color: 'rgba(255, 211, 0, 1.0)',
-  },
-  normal: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 16,
-    marginBottom: 10,
-    color: 'rgba(255, 255, 255, 1.0)',
   },
 });

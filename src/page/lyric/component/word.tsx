@@ -1,28 +1,43 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {LyricWordType} from 'src/service/song';
+import {Level} from './level';
 
 export interface WordProps {
-  word: LyricWordType;
-  isHighlight: boolean;
+  word: string;
+  level: Level;
 }
 
 const Word: FC<WordProps> = (props) => {
   let wordStyle;
 
-  if (props.isHighlight) wordStyle = styles.highlight;
-  else wordStyle = styles.normal;
+  switch (props.level) {
+    case Level.LOW:
+      wordStyle = styles.low;
+      break;
+    case Level.MID:
+      wordStyle = styles.mid;
+      break;
+    case Level.HIGH:
+      wordStyle = styles.high;
+      break;
+    default:
+      wordStyle = styles.low;
+  }
 
-  return <Text style={wordStyle}>{`${props.word.data} `}</Text>;
+  return <Text style={wordStyle}>{`${props.word} `}</Text>;
 };
 
 export default React.memo(Word);
 
 const styles = StyleSheet.create({
-  highlight: {
-    textDecorationLine: 'underline',
+  low: {
+    color: 'rgba(255, 255, 255, 1.0)',
   },
-  normal: {
-    textDecorationLine: 'none',
+  mid: {
+    color: 'rgba(255, 211, 0, 1.0)',
+  },
+  high: {
+    color: 'rgba(255, 211, 0, 1.0)',
+    textDecorationLine: 'underline',
   },
 });

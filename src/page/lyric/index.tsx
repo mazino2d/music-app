@@ -1,34 +1,47 @@
 import React, {FC, useContext} from 'react';
-import {ScrollView} from 'react-native-gesture-handler';
-import {LyricSentenceType} from '../../service/song';
+import {LyricSentenceType, LyricWordType} from 'src/service/song';
 import {playlistContext} from '../../store/playlist';
-import Sentence from './component/sentence';
+import Lyric from './component/lyric';
 
-const Lyric: FC = () => {
+const searchSeek = (
+  currentTime: number,
+  listData: LyricSentenceType[] | LyricWordType[] | undefined,
+) => {
+  if (!listData) return -1;
+
+  let indexSeek = -1;
+
+  for (const [index, element] of listData.entries()) {
+    if (element.startTime < currentTime && currentTime < element.endTime) {
+      indexSeek = index;
+      break;
+    }
+  }
+
+  return indexSeek;
+};
+
+const LyricPlayer: FC = () => {
   const playlistStore = useContext(playlistContext);
-  if (!playlistStore) return <></>;
+  if (!playlistStore || !playlistStore.lyric) return <></>;
 
   const currentTime = playlistStore.currentTime * 1000;
 
-  const renderLyric = () => {
-    return playlistStore.lyric?.listData.map(
-      (sentence: LyricSentenceType, index: number) => {
-        const isHighlight =
-          currentTime <= sentence.endTime && currentTime >= sentence.startTime;
+  const listSentence = playlistStore.lyric.listData;
 
-        return (
-          <Sentence
-            key={index}
-            sentence={sentence}
-            isHighlight={isHighlight}
-            currentTime={currentTime}
-          />
-        );
-      },
-    );
-  };
+  const indexSeekSentence = searchSeek(currentTime, listSentence);
 
-  return <ScrollView>{renderLyric()}</ScrollView>;
+  const listWord = listSentence[indexSeekSentence]?.listData;
+
+  const indexSeekWord = searchSeek(currentTime, listWord);
+
+  return (
+    <Lyric
+      lyric={playlistStore.lyric.listData}
+      indexSeekSentence={indexSeekSentence}
+      indexSeekWord={indexSeekWord}
+    />
+  );
 };
 
-export default Lyric;
+export default LyricPlayer;
