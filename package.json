@@ -20,10 +20,10 @@
     "axios": "^0.19.2",
     "react": "16.11.0",
     "react-native": "0.62.2",
-    "react-native-eject": "^0.1.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.7.0",
+    "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-video": "^4.4.5"
   },
