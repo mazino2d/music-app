@@ -1,10 +1,14 @@
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useEffect, useRef} from 'react';
+import {ScrollView} from 'react-native';
 import {LyricSentenceType, LyricWordType} from 'src/service/song';
 import {playlistContext} from '../../store/playlist';
 import Lyric from './component/lyric';
 
+const lineHeight = 33;
+
 const searchSeek = (
   currentTime: number,
+  oldValue: number,
   listData: LyricSentenceType[] | LyricWordType[] | undefined,
 ) => {
   if (!listData) return -1;
@@ -12,35 +16,50 @@ const searchSeek = (
   let indexSeek = -1;
 
   for (const [index, element] of listData.entries()) {
-    if (element.startTime < currentTime && currentTime < element.endTime) {
+    if (element.startTime <= currentTime && currentTime < element.endTime) {
       indexSeek = index;
       break;
     }
   }
 
-  return indexSeek;
+  if (indexSeek === -1) return oldValue;
+  else return indexSeek;
 };
 
 const LyricPlayer: FC = () => {
   const playlistStore = useContext(playlistContext);
   if (!playlistStore || !playlistStore.lyric) return <></>;
+  const scrollViewRef = useRef<ScrollView>(null);
+
+  const idxSeekSen = useRef(-1);
+  const idxSeekWord = useRef(-1);
 
   const currentTime = playlistStore.currentTime * 1000;
 
-  const listSentence = playlistStore.lyric.listData;
+  const listSen = playlistStore.lyric.listData;
 
-  const indexSeekSentence = searchSeek(currentTime, listSentence);
+  idxSeekSen.current = searchSeek(currentTime, idxSeekSen.current, listSen);
 
-  const listWord = listSentence[indexSeekSentence]?.listData;
+  const listWord = listSen[idxSeekSen.current]?.listData;
 
-  const indexSeekWord = searchSeek(currentTime, listWord);
+  idxSeekWord.current = searchSeek(currentTime, idxSeekWord.current, listWord);
+
+  useEffect(() => {
+    scrollViewRef.current?.scrollResponderScrollTo({
+      x: 0,
+      y: lineHeight * idxSeekSen.current - 10 * lineHeight,
+      animated: true,
+    });
+  }, [idxSeekSen.current]);
 
   return (
-    <Lyric
-      lyric={playlistStore.lyric.listData}
-      indexSeekSentence={indexSeekSentence}
-      indexSeekWord={indexSeekWord}
-    />
+    <ScrollView ref={scrollViewRef}>
+      <Lyric
+        lyric={playlistStore.lyric.listData}
+        idxSeekSen={idxSeekSen.current}
+        idxSeekWord={idxSeekWord.current}
+      />
+    </ScrollView>
   );
 };
 

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 211, 0, 1.0)',
   },
   high: {
-    color: 'rgba(255, 211, 0, 1.0)',
-    textDecorationLine: 'underline',
+    color: 'rgba(0, 100, 255, 1.0)',
+    fontWeight: 'bold',
   },
 });
