@@ -1,9 +1,15 @@
-# How to export debug apk file (Android)
+# How to export apk file (android, debug)
 
 ```
-react-native link react-native-vector-icons
 react-native bundle --platform android --dev false \
 --entry-file index.js --assets-dest android/app/src/main/res/ \
 --bundle-output android/app/src/main/assets/index.android.bundle
+
 cd android && ./gradlew assembleDebug
+```
+
+# How to export aab file (android, release)
+
+```
+cd android && ./gradlew bundleRelease
 ```
