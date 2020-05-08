@@ -37,8 +37,11 @@ export const loginPageStyles = StyleSheet.create({
 
 // Home Page
 export const homePageStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#000',
+  },
   itemList: {
-    marginBottom: 50,
+    marginBottom: 80,
   },
 });
 export const homeItemListStyles = StyleSheet.create({
@@ -67,6 +70,17 @@ export const homeItemListStyles = StyleSheet.create({
     marginTop: 10,
   },
 });
+export const homeHeaderStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#000',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    color: '#fff',
+    backgroundColor: '#000',
+  },
+});
 export const homeFooterStyles = StyleSheet.create({
   container: {
     backgroundColor: '#000',
@@ -76,7 +90,7 @@ export const homeFooterStyles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 35,
     marginLeft: 'auto',
     marginRight: 'auto',
   },
@@ -139,7 +153,6 @@ export const playerPage = StyleSheet.create({
     backgroundColor: '#000',
   },
 });
-
 export const playerHeaderStyles = StyleSheet.create({
   container: {
     height: 72,

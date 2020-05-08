@@ -4,6 +4,7 @@ import {ScrollView, View} from 'react-native';
 import {playlistContext} from '../../store/playlist';
 import {homePageStyles} from '../../theme/dark';
 import Footer from './component/footer';
+import Header from './component/header';
 import ItemList from './component/item-list';
 
 const Home: FC = () => {
@@ -23,8 +24,13 @@ const Home: FC = () => {
     navigation.navigate('Player');
   };
 
+  const onPressSetting = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={homePageStyles.container}>
+      <Header onPressSetting={onPressSetting} />
       <ScrollView style={homePageStyles.itemList}>
         <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>

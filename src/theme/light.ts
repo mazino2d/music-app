@@ -70,6 +70,17 @@ export const homeItemListStyles = StyleSheet.create({
     marginTop: 10,
   },
 });
+export const homeHeaderStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    color: '#000',
+    backgroundColor: '#fff',
+  },
+});
 export const homeFooterStyles = StyleSheet.create({
   container: {
     backgroundColor: '#D8D8D8',
@@ -142,7 +153,6 @@ export const playerPage = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
-
 export const playerHeaderStyles = StyleSheet.create({
   container: {
     height: 72,

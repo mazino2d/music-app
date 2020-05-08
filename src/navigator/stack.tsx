@@ -21,11 +21,7 @@ const StackNavigator: FC = () => (
       component={Login}
       options={{headerShown: false}}
     />
-    <Stack.Screen
-      name="Home"
-      component={Home}
-      options={{headerTintColor: navigationStyles.header.color}}
-    />
+    <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
     <Stack.Screen
       name="Player"
       component={Player}
