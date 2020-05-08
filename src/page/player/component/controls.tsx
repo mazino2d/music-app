@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {playerControlsStyles} from '../../../theme/dark';
 
 interface ControlsProps {
   paused: boolean;
@@ -15,7 +16,7 @@ interface ControlsProps {
 
 const Controls: FC<ControlsProps> = (props: ControlsProps) => {
   return (
-    <View style={styles.container}>
+    <View style={playerControlsStyles.container}>
       <Icon.Button
         name="shuffle"
         size={20}
@@ -61,17 +62,3 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
 };
 
 export default Controls;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-});

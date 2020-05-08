@@ -1,7 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useContext} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {playlistContext} from '../../store/playlist';
+import {homePageStyles} from '../../theme/dark';
 import Footer from './component/footer';
 import ItemList from './component/item-list';
 
@@ -23,8 +24,8 @@ const Home: FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.list}>
+    <View>
+      <ScrollView style={homePageStyles.itemList}>
         <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>
       <Footer
@@ -39,15 +40,5 @@ const Home: FC = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
-  list: {
-    marginBottom: 50,
-  },
-});
 
 export default Home;

@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {Text} from 'react-native';
 import {LyricWordType} from 'src/service/song';
+import {lyricSentenceStyles} from '../../../theme/dark';
 import {Level} from './level';
 import Word from './word';
 
@@ -12,7 +13,7 @@ export interface SentenceProps {
 
 const Sentence: FC<SentenceProps> = (props) => {
   return (
-    <Text style={styles.sentense}>
+    <Text style={lyricSentenceStyles.sentense}>
       {props.sentence.map((value: LyricWordType, index: number) => {
         let level = Level.LOW;
 
@@ -28,12 +29,3 @@ const Sentence: FC<SentenceProps> = (props) => {
 };
 
 export default React.memo(Sentence);
-
-const styles = StyleSheet.create({
-  sentense: {
-    flex: 1,
-    textAlign: 'center',
-    fontSize: 17,
-    marginBottom: 10,
-  },
-});
