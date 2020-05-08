@@ -24,7 +24,7 @@ const Home: FC = () => {
   };
 
   return (
-    <View>
+    <View style={homePageStyles.container}>
       <ScrollView style={homePageStyles.itemList}>
         <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>

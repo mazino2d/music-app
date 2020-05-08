@@ -2,6 +2,7 @@ import React, {FC, useContext, useEffect, useRef} from 'react';
 import {ScrollView} from 'react-native';
 import {LyricSentenceType, LyricWordType} from 'src/service/song';
 import {playlistContext} from '../../store/playlist';
+import {lyricPageStyles} from '../../theme/dark';
 import Lyric from './component/lyric';
 
 const lineHeight = 33;
@@ -53,7 +54,7 @@ const LyricPlayer: FC = () => {
   }, [idxSeekSen.current]);
 
   return (
-    <ScrollView ref={scrollViewRef}>
+    <ScrollView style={lyricPageStyles.container} ref={scrollViewRef}>
       <Lyric
         lyric={playlistStore.lyric.listData}
         idxSeekSen={idxSeekSen.current}

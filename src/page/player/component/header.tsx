@@ -13,15 +13,15 @@ const Header: FC<HeaderProps> = (props: HeaderProps) => (
     <Icon.Button
       name="chevron-down"
       size={20}
-      color="#fff"
-      backgroundColor="#000"
+      color={playerHeaderStyles.button.color}
+      backgroundColor={playerHeaderStyles.button.backgroundColor}
     />
     <Text style={playerHeaderStyles.title}>{props.title.toUpperCase()}</Text>
     <Icon.Button
       name="card-text-outline"
       size={20}
-      color="#fff"
-      backgroundColor="#000"
+      color={playerHeaderStyles.button.color}
+      backgroundColor={playerHeaderStyles.button.backgroundColor}
       onPress={props.onPressShowLyric}
     />
   </View>

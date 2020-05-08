@@ -33,24 +33,24 @@ const Footer: FC<FooterProps> = (props) => {
       <Icon.Button
         name="skip-previous"
         size={35}
-        color="#fff"
-        backgroundColor="#000"
+        color={homeFooterStyles.button.color}
+        backgroundColor={homeFooterStyles.button.backgroundColor}
         onPress={props.onPressBackTrack}
       />
 
       <Icon.Button
         name={props.paused ? 'play' : 'pause'}
         size={35}
-        color="#fff"
-        backgroundColor="#000"
+        color={homeFooterStyles.button.color}
+        backgroundColor={homeFooterStyles.button.backgroundColor}
         onPress={props.onPressPlayOrPause}
       />
 
       <Icon.Button
         name="skip-next"
         size={35}
-        color="#fff"
-        backgroundColor="#000"
+        color={homeFooterStyles.button.color}
+        backgroundColor={homeFooterStyles.button.backgroundColor}
         onPress={props.onPressNextTrack}
       />
     </View>

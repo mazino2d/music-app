@@ -4,6 +4,7 @@ import Home from '../page/home';
 import Login from '../page/login';
 import LyricPlayer from '../page/lyric';
 import Player from '../page/player';
+import {navigationStyles} from '../theme/dark';
 
 const Stack = createStackNavigator();
 
@@ -13,17 +14,28 @@ const StackNavigator: FC = () => (
     headerMode="float"
     screenOptions={{
       headerTitleAlign: 'center',
-      headerStatusBarHeight: 0,
-      headerStyle: {backgroundColor: 'black'},
+      headerStyle: {backgroundColor: navigationStyles.header.backgroundColor},
     }}>
     <Stack.Screen
       name="Login"
       component={Login}
       options={{headerShown: false}}
     />
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="Player" component={Player} />
-    <Stack.Screen name="Lyric" component={LyricPlayer} />
+    <Stack.Screen
+      name="Home"
+      component={Home}
+      options={{headerTintColor: navigationStyles.header.color}}
+    />
+    <Stack.Screen
+      name="Player"
+      component={Player}
+      options={{headerTintColor: navigationStyles.header.color}}
+    />
+    <Stack.Screen
+      name="Lyric"
+      component={LyricPlayer}
+      options={{headerTintColor: navigationStyles.header.color}}
+    />
   </Stack.Navigator>
 );
 

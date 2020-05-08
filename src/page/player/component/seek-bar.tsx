@@ -24,9 +24,9 @@ const SeekBar: FC<SeekBarProps> = (props: SeekBarProps) => (
     <Slider
       value={props.currentTime / (props.duration + 1)}
       style={playerSeekBarStyles.slider}
-      minimumTrackTintColor="#fff"
-      maximumTrackTintColor="#ffa"
-      thumbTintColor="#fff"
+      minimumTrackTintColor={playerSeekBarStyles.seek.borderStartColor}
+      maximumTrackTintColor={playerSeekBarStyles.seek.borderEndColor}
+      thumbTintColor={playerSeekBarStyles.seek.color}
       onValueChange={props.onTimeChange}
     />
   </View>

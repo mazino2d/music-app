@@ -3,8 +3,8 @@ import {Dimensions, StyleSheet} from 'react-native';
 // Navigation
 export const navigationStyles = StyleSheet.create({
   header: {
-    color: '#fff',
-    backgroundColor: '#000',
+    color: '#000',
+    backgroundColor: '#D8D8D8',
   },
 });
 
@@ -37,6 +37,9 @@ export const loginPageStyles = StyleSheet.create({
 
 // Home Page
 export const homePageStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+  },
   itemList: {
     marginBottom: 50,
   },
@@ -55,13 +58,13 @@ export const homeItemListStyles = StyleSheet.create({
     height: 64,
   },
   title: {
-    color: '#ffffff',
+    color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
   },
   artist: {
-    color: '#ffffff',
+    color: '#000',
     fontSize: 14,
     marginLeft: 10,
     marginTop: 10,
@@ -69,7 +72,7 @@ export const homeItemListStyles = StyleSheet.create({
 });
 export const homeFooterStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#000',
+    backgroundColor: '#D8D8D8',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -81,7 +84,7 @@ export const homeFooterStyles = StyleSheet.create({
     marginRight: 'auto',
   },
   title: {
-    color: '#ffffff',
+    color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
     marginLeft: 10,
@@ -100,26 +103,26 @@ export const homeFooterStyles = StyleSheet.create({
     height: 40,
   },
   button: {
-    color: '#fff',
-    backgroundColor: '#000',
+    color: '#000',
+    backgroundColor: '#D8D8D8',
   },
 });
 
 // Lyric Page
 export const lyricPageStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
 });
 export const lyricWordStyles = StyleSheet.create({
   low: {
-    color: 'rgba(255, 255, 255, 1.0)',
+    color: 'rgba(0, 0, 0, 1.0)',
   },
   mid: {
-    color: 'rgba(255, 211, 0, 1.0)',
+    color: 'rgba(0, 100, 255, 1.0)',
   },
   high: {
-    color: 'rgba(0, 100, 255, 1.0)',
+    color: 'rgba(255, 0, 0, 1.0)',
     fontWeight: 'bold',
   },
 });
@@ -136,7 +139,7 @@ export const lyricSentenceStyles = StyleSheet.create({
 export const playerPage = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
   },
 });
 
@@ -156,8 +159,8 @@ export const playerHeaderStyles = StyleSheet.create({
     fontSize: 10,
   },
   button: {
-    color: '#fff',
-    backgroundColor: '#000',
+    color: '#000',
+    backgroundColor: '#fff',
   },
 });
 const windowSize = Dimensions.get('window');
@@ -188,11 +191,11 @@ export const playerTrackDetailStyles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
   },
   artist: {
-    color: 'rgba(255, 255, 255, 0.72)',
+    color: 'rgba(0, 0, 0, 0.72)',
     fontSize: 12,
     marginTop: 4,
   },
@@ -207,14 +210,14 @@ export const playerSeekBarStyles = StyleSheet.create({
     paddingTop: 32,
   },
   text: {
-    color: 'rgba(255, 255, 255, 0.72)',
+    color: 'rgba(0, 0, 0, 0.72)',
     fontSize: 12,
     textAlign: 'center',
   },
   seek: {
-    borderStartColor: '#fff',
-    borderEndColor: '#ffa',
-    color: '#fff',
+    borderStartColor: '#000',
+    borderEndColor: '#001',
+    color: '#000',
   },
 });
 export const playerControlsStyles = StyleSheet.create({
@@ -230,7 +233,7 @@ export const playerControlsStyles = StyleSheet.create({
     marginRight: 'auto',
   },
   button: {
-    color: '#fff',
-    backgroundColor: '#000',
+    color: '#000',
+    backgroundColor: '#fff',
   },
 });

@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  FunctionComponent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {createContext, FC, useEffect, useRef, useState} from 'react';
 import Video, {OnLoadData, OnProgressData} from 'react-native-video';
 import SongApi, {
   InfoMediaType,
@@ -32,7 +26,7 @@ interface PlaylistContext {
   setSelectedSong: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export const PlaylistProvider: FunctionComponent = ({children}) => {
+export const PlaylistProvider: FC = ({children}) => {
   const videoRef = useRef<Video>(null);
   const initialState: InfoMediaType[] = [];
 

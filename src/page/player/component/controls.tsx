@@ -20,8 +20,8 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
       <Icon.Button
         name="shuffle"
         size={20}
-        color="#fff"
-        backgroundColor="#000"
+        color={playerControlsStyles.button.color}
+        backgroundColor={playerControlsStyles.button.backgroundColor}
         style={{opacity: props.shuffleOn ? 1 : 0.3}}
         onPress={props.onPressShuffleOn}
       />
@@ -29,31 +29,31 @@ const Controls: FC<ControlsProps> = (props: ControlsProps) => {
       <Icon.Button
         name="skip-previous"
         size={35}
-        color="#fff"
-        backgroundColor="#000"
+        color={playerControlsStyles.button.color}
+        backgroundColor={playerControlsStyles.button.backgroundColor}
         onPress={props.onPressBackTrack}
       />
 
       <Icon.Button
         name={props.paused ? 'play' : 'pause'}
         size={90}
-        color="#fff"
-        backgroundColor="#000"
+        color={playerControlsStyles.button.color}
+        backgroundColor={playerControlsStyles.button.backgroundColor}
         onPress={props.onPressPlayOrPause}
       />
 
       <Icon.Button
         name="skip-next"
         size={35}
-        color="#fff"
-        backgroundColor="#000"
+        color={playerControlsStyles.button.color}
+        backgroundColor={playerControlsStyles.button.backgroundColor}
         onPress={props.onPressNextTrack}
       />
       <Icon.Button
         name={props.repeatOn === 2 ? 'repeat-once' : 'repeat'}
         size={20}
-        color="#fff"
-        backgroundColor="#000"
+        color={playerControlsStyles.button.color}
+        backgroundColor={playerControlsStyles.button.backgroundColor}
         style={{opacity: props.repeatOn !== 0 ? 1 : 0.3}}
         onPress={props.onPressRepeatOn}
       />

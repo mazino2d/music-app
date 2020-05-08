@@ -3,6 +3,7 @@ import React, {FC, useContext} from 'react';
 import {StatusBar, View} from 'react-native';
 import {InfoMediaType} from '../../service/song';
 import {playlistContext} from '../../store/playlist';
+import {playerPage} from '../../theme/dark';
 import AlbumArt from './component/album-art';
 import Controls from './component/controls';
 import Header from './component/header';
@@ -27,7 +28,7 @@ const Player: FC = () => {
   const song = playlistStore.playlist[playlistStore.selectedSong];
 
   return (
-    <View style={styles.container}>
+    <View style={playerPage.container}>
       <StatusBar hidden />
       <Header title="" onPressShowLyric={onPressShowLyric} />
       <AlbumArt url={`${coverPrefix}${song.cover}`} />
@@ -49,17 +50,6 @@ const Player: FC = () => {
       />
     </View>
   );
-};
-
-const styles = {
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
-  audioElement: {
-    height: 0,
-    width: 0,
-  },
 };
 
 export default Player;
