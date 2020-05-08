@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useContext} from 'react';
-import {ScrollView, StatusBar, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {playlistContext} from '../../store/playlist';
 import Footer from './component/footer';
 import ItemList from './component/item-list';
@@ -24,7 +24,6 @@ const Home: FC = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
       <ScrollView style={styles.list}>
         <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>

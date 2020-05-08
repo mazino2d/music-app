@@ -1,5 +1,6 @@
 import {DarkTheme, NavigationContainer} from '@react-navigation/native';
 import React, {FC, useContext, useEffect} from 'react';
+import {StatusBar} from 'react-native';
 import StackNavigator from './navigator/stack';
 import SongApi, {InfoMediaType} from './service/song';
 import {playlistContext, PlaylistProvider} from './store/playlist';
@@ -36,6 +37,7 @@ const Main: FC = () => {
 
 const App: FC = () => (
   <PlaylistProvider>
+    <StatusBar hidden />
     <Main />
   </PlaylistProvider>
 );
