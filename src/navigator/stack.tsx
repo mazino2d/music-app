@@ -4,6 +4,7 @@ import Home from '../page/home';
 import Login from '../page/login';
 import LyricPlayer from '../page/lyric';
 import Player from '../page/player';
+import Setting from '../page/setting';
 import {navigationStyles} from '../theme/dark';
 
 const Stack = createStackNavigator();
@@ -30,6 +31,11 @@ const StackNavigator: FC = () => (
     <Stack.Screen
       name="Lyric"
       component={LyricPlayer}
+      options={{headerTintColor: navigationStyles.header.color}}
+    />
+    <Stack.Screen
+      name="Setting"
+      component={Setting}
       options={{headerTintColor: navigationStyles.header.color}}
     />
   </Stack.Navigator>

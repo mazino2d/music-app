@@ -25,7 +25,7 @@ const Home: FC = () => {
   };
 
   const onPressSetting = () => {
-    navigation.navigate('Login');
+    navigation.navigate('Setting');
   };
 
   return (
