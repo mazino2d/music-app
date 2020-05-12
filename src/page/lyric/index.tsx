@@ -1,6 +1,6 @@
 import React, {FC, useContext, useEffect, useRef} from 'react';
 import {ScrollView} from 'react-native';
-import {LyricSentenceType, LyricWordType} from 'src/service/song';
+import {LyricSentenceType, LyricWordType} from 'src/service/playlist';
 import {playlistContext} from '../../store/playlist';
 import {lyricPageStyles} from '../../theme/dark';
 import Lyric from './component/lyric';

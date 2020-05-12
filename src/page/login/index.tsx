@@ -1,13 +1,51 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {FC} from 'react';
-import {Button, ImageBackground, Text, TextInput, View} from 'react-native';
+import React, {FC, useContext} from 'react';
+import {
+  Alert,
+  Button,
+  ImageBackground,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import {SvgUri} from 'react-native-svg';
+import AuthApi, {FailTokenType, SuccessTokenType} from '../../service/auth';
+import {authContext} from '../../store/auth';
 import {loginPageStyles} from '../../theme/dark';
 
 const Login: FC = () => {
+  const authStore = useContext(authContext);
+  if (!authStore) return <></>;
   const navigation = useNavigation();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
+
+  const onPressLoginButton = () => {
+    (async () => {
+      const data: SuccessTokenType | FailTokenType = await AuthApi.post.login(
+        username,
+        password,
+      );
+
+      if (!(data as FailTokenType).err) {
+        const accessToken = (data as SuccessTokenType).accessToken;
+        const refreshToken = (data as SuccessTokenType).refreshToken;
+        authStore.setAccessToken(accessToken);
+        authStore.setRefreshToken(refreshToken);
+        authStore.setErrorCode(0);
+        authStore.setErrorMessage('');
+        navigation.navigate('Home');
+      } else {
+        const err = (data as FailTokenType).err;
+        const msg = (data as FailTokenType).msg;
+        authStore.setAccessToken('');
+        authStore.setRefreshToken('');
+        authStore.setErrorCode(err);
+        authStore.setErrorMessage(msg);
+        Alert.alert('Error', `${msg} (${err}).`);
+      }
+    })();
+  };
 
   return (
     <ImageBackground
@@ -44,13 +82,7 @@ const Login: FC = () => {
           secureTextEntry
           onChangeText={(text) => setPassword(text)}
         />
-        <Button
-          title="Login"
-          color="purple"
-          onPress={() => {
-            navigation.navigate('Home');
-          }}
-        />
+        <Button title="Login" color="purple" onPress={onPressLoginButton} />
       </View>
     </ImageBackground>
   );

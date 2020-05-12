@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {LyricSentenceType} from 'src/service/song';
+import {LyricSentenceType} from 'src/service/playlist';
 import Sentence from './sentence';
 
 export interface LyricProps {

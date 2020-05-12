@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Text} from 'react-native';
-import {LyricWordType} from 'src/service/song';
+import {LyricWordType} from 'src/service/playlist';
 import {lyricSentenceStyles} from '../../../theme/dark';
 import {Level} from './level';
 import Word from './word';

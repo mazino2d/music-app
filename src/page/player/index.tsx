@@ -1,7 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useContext} from 'react';
 import {StatusBar, View} from 'react-native';
-import {InfoMediaType} from '../../service/song';
+import {InfoMediaType} from '../../service/playlist';
 import {playlistContext} from '../../store/playlist';
 import {playerPage} from '../../theme/dark';
 import AlbumArt from './component/album-art';

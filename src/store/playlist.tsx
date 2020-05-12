@@ -4,7 +4,7 @@ import SongApi, {
   InfoMediaType,
   LyricSentenceType,
   LyricType,
-} from '../service/song';
+} from '../service/playlist';
 
 interface PlaylistContext {
   playlist: InfoMediaType[];
