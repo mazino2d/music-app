@@ -27,7 +27,7 @@ const Login: FC = () => {
         password,
       );
 
-      if (!(data as FailTokenType).err) {
+      if (!(data as FailTokenType).msg) {
         const accessToken = (data as SuccessTokenType).accessToken;
         const refreshToken = (data as SuccessTokenType).refreshToken;
         authStore.setAccessToken(accessToken);

@@ -1,9 +1,22 @@
-import React, {FC, useState} from 'react';
-import {ScrollView, Switch, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {FC, useContext, useState} from 'react';
+import {Button, ScrollView, Switch, Text, View} from 'react-native';
+import {authContext} from '../../store/auth';
 import {settingPage} from '../../theme/dark';
 
 const Setting: FC = () => {
+  const authStore = useContext(authContext);
+  if (!authStore) return <></>;
+  const navigation = useNavigation();
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+
+  const onPressLogoutButton = () => {
+    authStore.setAccessToken('');
+    authStore.setRefreshToken('');
+    authStore.setErrorCode(0);
+    authStore.setErrorMessage('');
+    navigation.navigate('Login');
+  };
 
   return (
     <ScrollView>
@@ -17,6 +30,7 @@ const Setting: FC = () => {
           value={isDarkTheme}
         />
       </View>
+      <Button title="Logout" onPress={onPressLogoutButton}  />
     </ScrollView>
   );
 };

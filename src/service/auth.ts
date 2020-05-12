@@ -11,10 +11,18 @@ export default {
         username,
         password,
       };
-      const {data} = await Axios.post(`${host}`, body);
-      const result: SuccessTokenType | FailTokenType = data;
+      try {
+        const {data} = await Axios.post(`${host}`, body);
+        const result: SuccessTokenType = data;
 
-      return result;
+        return result;
+      } catch (error) {
+        const result: FailTokenType = JSON.parse(
+          error.response.request._response,
+        );
+
+        return result;
+      }
     },
   },
 };
