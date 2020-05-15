@@ -25,12 +25,21 @@ const Player: FC = () => {
     navigation.navigate('Lyric');
   };
 
+  const onPressBeatOnly = () => {
+    playlistStore.setIsBeat(!playlistStore.isBeat);
+  };
+
   const song = playlistStore.playlist[playlistStore.selectedSong];
 
   return (
     <View style={playerPage.container}>
       <StatusBar hidden />
-      <Header title="" onPressShowLyric={onPressShowLyric} />
+      <Header
+        title=""
+        isBeat={playlistStore.isBeat}
+        onPressShowLyric={onPressShowLyric}
+        onPressBeatOnly={onPressBeatOnly}
+      />
       <AlbumArt url={`${coverPrefix}${song.cover}`} />
       <TrackDetails title={song.title} artist={song.listArtist.join(', ')} />
       <SeekBar

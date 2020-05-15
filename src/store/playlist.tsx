@@ -6,6 +6,8 @@ import SongApi, {
   LyricType,
 } from '../service/playlist';
 
+const host = 'https://zmediadata.zingmp3.vn/spleeter/res';
+
 interface PlaylistContext {
   playlist: InfoMediaType[];
   selectedSong: number;
@@ -14,7 +16,7 @@ interface PlaylistContext {
   repeatOn: number;
   duration: number;
   currentTime: number;
-  videoRef: React.RefObject<Video>;
+  isBeat: boolean;
   lyric?: LyricType;
   onPressPlayOrPause: () => void;
   onPressRepeatOn: () => void;
@@ -24,10 +26,12 @@ interface PlaylistContext {
   onPressSeek: (value: number) => void;
   setPlaylist: React.Dispatch<React.SetStateAction<InfoMediaType[]>>;
   setSelectedSong: React.Dispatch<React.SetStateAction<number>>;
+  setIsBeat: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const PlaylistProvider: FC = ({children}) => {
-  const videoRef = useRef<Video>(null);
+  const songRef = useRef<Video>(null);
+  const beatRef = useRef<Video>(null);
   const initialState: InfoMediaType[] = [];
 
   const [playlist, setPlaylist] = useState(initialState);
@@ -37,7 +41,25 @@ export const PlaylistProvider: FC = ({children}) => {
   const [repeatOn, setRepeatOn] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [isBeat, setIsBeat] = useState(false);
   const [lyric, setLyric] = useState<LyricType>();
+
+  useEffect(() => {
+    const song: InfoMediaType | undefined = playlist[selectedSong];
+
+    if (song) {
+      (async () => {
+        const data: LyricType = await SongApi.mGet.getLyric(song.idMedia);
+        data.listData.map(
+          (sentense: LyricSentenceType) =>
+            (sentense.listData[0].data =
+              sentense.listData[0].data.charAt(0).toUpperCase() +
+              sentense.listData[0].data.slice(1)),
+        ),
+          setLyric(data);
+      })();
+    }
+  }, []);
 
   useEffect(() => {
     const song: InfoMediaType | undefined = playlist[selectedSong];
@@ -107,7 +129,8 @@ export const PlaylistProvider: FC = ({children}) => {
   };
 
   const onPressSeek = (value: number) => {
-    videoRef.current?.seek(value * (duration + 1));
+    songRef.current?.seek(value * (duration + 1));
+    beatRef.current?.seek(value * (duration + 1));
   };
 
   return (
@@ -120,7 +143,7 @@ export const PlaylistProvider: FC = ({children}) => {
         repeatOn,
         duration,
         currentTime,
-        videoRef,
+        isBeat,
         lyric,
         onPressPlayOrPause,
         onPressRepeatOn,
@@ -130,21 +153,37 @@ export const PlaylistProvider: FC = ({children}) => {
         onPressSeek,
         setPlaylist,
         setSelectedSong,
+        setIsBeat,
       }}>
       {children}
       {playlist.length !== 0 ? (
-        <Video
-          audioOnly
-          playInBackground
-          playWhenInactive
-          ref={videoRef}
-          source={{uri: playlist[selectedSong].link}}
-          paused={paused}
-          repeat={repeatOn === 2}
-          onLoad={onLoadSetDuration}
-          onProgress={onProgressSetCurrentTime}
-          onEnd={repeatOn === 1 ? onPressNextTrack : undefined}
-        />
+        <>
+          <Video
+            audioOnly
+            playInBackground
+            playWhenInactive
+            ref={songRef}
+            source={{uri: playlist[selectedSong].link}}
+            paused={paused}
+            repeat={repeatOn === 2}
+            onLoad={onLoadSetDuration}
+            onProgress={onProgressSetCurrentTime}
+            onEnd={repeatOn === 1 ? onPressNextTrack : undefined}
+            muted={isBeat}
+          />
+          <Video
+            audioOnly
+            playInBackground
+            playWhenInactive
+            ref={beatRef}
+            source={{
+              uri: `${host}?typeReq=get&id=${playlist[selectedSong].idMedia}&codec=mp3&typeSplit=beat`,
+            }}
+            paused={paused}
+            repeat={repeatOn === 2}
+            muted={!isBeat}
+          />
+        </>
       ) : (
         <></>
       )}
