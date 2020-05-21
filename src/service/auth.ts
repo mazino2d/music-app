@@ -1,18 +1,18 @@
 import Axios from 'axios';
-const host = 'https://zmd.zingmp3.vn/api/v1/auth/pwd';
+const host = 'https://zmd.zingmp3.vn/api/v1';
 const clientId =
   '04849E02E202B05569C3E8994C3C7C5B1F72D3E89D89D9873CF4F01DA3DC115D';
 
 export default {
   post: {
-    login: async (username: string, password: string) => {
+    genToken: async (username: string, password: string) => {
       const body = {
         clientId,
         username,
         password,
       };
       try {
-        const {data} = await Axios.post(`${host}`, body);
+        const {data} = await Axios.post(`${host}/auth/pwd`, body);
         const result: SuccessMessageType = data;
 
         return result;
@@ -23,6 +23,17 @@ export default {
 
         return result;
       }
+    },
+    refreshToken: async (refreshToken: string) => {
+      const body = {
+        clientId,
+        refreshToken,
+      };
+
+      const {data} = await Axios.post(`${host}/auth/token`, body);
+      const result: TokenType = data;
+
+      return result;
     },
   },
 };

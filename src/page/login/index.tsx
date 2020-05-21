@@ -1,5 +1,6 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
-import React, {FC, useContext} from 'react';
+import React, {FC} from 'react';
 import {
   Alert,
   Button,
@@ -10,12 +11,9 @@ import {
 } from 'react-native';
 import {SvgUri} from 'react-native-svg';
 import AuthApi, {FailMessageType, SuccessMessageType} from '../../service/auth';
-import {authContext} from '../../store/auth';
 import {loginPageStyles} from '../../theme/dark';
 
 const Login: FC = () => {
-  const authStore = useContext(authContext);
-  if (!authStore) return <></>;
   const navigation = useNavigation();
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -24,23 +22,19 @@ const Login: FC = () => {
     (async () => {
       const data:
         | SuccessMessageType
-        | FailMessageType = await AuthApi.post.login(username, password);
+        | FailMessageType = await AuthApi.post.genToken(username, password);
 
       if (data.err === 0) {
         const accessToken = (data as SuccessMessageType).data.accessToken;
         const refreshToken = (data as SuccessMessageType).data.refreshToken;
-        authStore.setAccessToken(accessToken);
-        authStore.setRefreshToken(refreshToken);
-        authStore.setErrorCode(0);
-        authStore.setErrorMessage('');
+        AsyncStorage.setItem('AccessToken', accessToken);
+        AsyncStorage.setItem('RefreshToken', refreshToken);
         navigation.navigate('Home');
       } else {
         const err = data.err;
         const msg = data.msg;
-        authStore.setAccessToken('');
-        authStore.setRefreshToken('');
-        authStore.setErrorCode(err);
-        authStore.setErrorMessage(msg);
+        AsyncStorage.removeItem('AccessToken');
+        AsyncStorage.removeItem('RefreshToken');
         Alert.alert('Error', `${msg} (${err}).`);
       }
     })();

@@ -164,7 +164,7 @@ export const PlaylistProvider: FC = ({children}) => {
             playInBackground
             playWhenInactive
             ref={beatRef}
-            source={{uri: playlist[selectedSong].linkBeat.link}}
+            source={{uri: playlist[selectedSong].linkBeat}}
             paused={paused}
             repeat={repeatOn === 2}
             muted={!isBeat}

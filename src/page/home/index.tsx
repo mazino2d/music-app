@@ -15,7 +15,24 @@ const Home: FC = () => {
   if (!playlistStore) return <></>;
 
   useEffect(() => {
-    playlistStore.setSelectedSong(1);
+    (async () => {
+      const data: InfoMediaType[] = await SongApi.mGet.getInfoMedia([
+        1076394293,
+        1078050656,
+        1074800031,
+        1079202426,
+        1074456159,
+        1079543469,
+        1079579240,
+        1073949836,
+        1079243177,
+        1075121297,
+        1076460518,
+        1074151000,
+      ]);
+
+      playlistStore?.setPlaylist(data);
+    })();
   }, []);
 
   const song = playlistStore.playlist[playlistStore.selectedSong];

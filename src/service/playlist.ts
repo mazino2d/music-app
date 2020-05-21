@@ -1,19 +1,20 @@
-import Axios from 'axios';
-const host = 'https://zmediadata.zingmp3.vn/api';
+import ZAxios from '../utils/zaxios';
+
+const host = 'https://zmd.zingmp3.vn/api/v1';
 const infoSrc = 'infoSrc=webZMD';
 
 export default {
   mGet: {
     getInfoMedia: async (listSongId: number[]) => {
-      const url = `${host}/song/mGetInfoMedia?isGetCover=1&isGetLinkBeat=1&listKey=${listSongId}&${infoSrc}`;
-      const {data} = await Axios.get(`${url}`);
+      const url = `${host}/song/getMediaInfo?ids=${listSongId}&fields=cover,link,listArtist,listGenre,linkBeat`;
+      const {data} = await ZAxios.get(`${url}`);
       const result: InfoMediaType[] = data;
 
       return result;
     },
     getLyric: async (songId: number) => {
       const url = `${host}/song/lyric?typeReq=get&ids=${songId}&${infoSrc}`;
-      const {data} = await Axios.get(`${url}`);
+      const {data} = await ZAxios.get(`${url}`);
       const result: LyricType = data[0];
 
       return result;
@@ -30,13 +31,8 @@ export interface InfoMediaType {
   listGenre: string[];
   listArtist: string[];
   link: string;
-  linkBeat: BeatType;
+  linkBeat: string;
   cover: string;
-}
-
-export interface BeatType {
-  id: number;
-  link: string;
 }
 
 export interface LyricWordType {
