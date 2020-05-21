@@ -1,6 +1,8 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {FC, useContext} from 'react';
+import React, {FC, useContext, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
+import {InfoMediaType} from 'src/service/playlist';
+import SongApi from '../../service/playlist';
 import {playlistContext} from '../../store/playlist';
 import {homePageStyles} from '../../theme/dark';
 import Footer from './component/footer';
@@ -11,6 +13,10 @@ const Home: FC = () => {
   const navigation = useNavigation();
   const playlistStore = useContext(playlistContext);
   if (!playlistStore) return <></>;
+
+  useEffect(() => {
+    playlistStore.setSelectedSong(1);
+  }, []);
 
   const song = playlistStore.playlist[playlistStore.selectedSong];
   if (!song) return <></>;
@@ -24,13 +30,21 @@ const Home: FC = () => {
     navigation.navigate('Player');
   };
 
+  const onPressSearch = (id: number) => () => {
+    (async () => {
+      const data: InfoMediaType[] = await SongApi.mGet.getInfoMedia([id]);
+
+      playlistStore?.setPlaylist(data);
+    })();
+  };
+
   const onPressSetting = () => {
     navigation.navigate('Setting');
   };
 
   return (
     <View style={homePageStyles.container}>
-      <Header onPressSetting={onPressSetting} />
+      <Header onPressSearch={onPressSearch} onPressSetting={onPressSetting} />
       <ScrollView style={homePageStyles.itemList}>
         <ItemList playlist={playlistStore.playlist} onPressItem={onPressItem} />
       </ScrollView>

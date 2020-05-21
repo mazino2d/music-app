@@ -45,7 +45,7 @@ const Player: FC = () => {
       <SeekBar
         duration={playlistStore.duration}
         currentTime={playlistStore.currentTime}
-        onTimeChange={playlistStore.onPressSeek}
+        onTimeChange={playlistStore.seekByPercent}
       />
       <Controls
         paused={playlistStore.paused}

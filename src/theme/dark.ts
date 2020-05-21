@@ -92,11 +92,17 @@ export const homeHeaderStyles = StyleSheet.create({
   container: {
     backgroundColor: '#000',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+  },
+  input: {
+    flex: 1,
+    color: '#fff',
+    backgroundColor: '#00000f',
+    justifyContent: 'flex-start',
   },
   button: {
     color: '#fff',
     backgroundColor: '#000',
+    justifyContent: 'flex-end',
   },
 });
 export const homeFooterStyles = StyleSheet.create({
@@ -108,7 +114,7 @@ export const homeFooterStyles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 35,
+    bottom: 40,
     marginLeft: 'auto',
     marginRight: 'auto',
   },

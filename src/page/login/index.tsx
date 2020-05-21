@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {SvgUri} from 'react-native-svg';
-import AuthApi, {FailTokenType, SuccessTokenType} from '../../service/auth';
+import AuthApi, {FailMessageType, SuccessMessageType} from '../../service/auth';
 import {authContext} from '../../store/auth';
 import {loginPageStyles} from '../../theme/dark';
 
@@ -22,22 +22,21 @@ const Login: FC = () => {
 
   const onPressLoginButton = () => {
     (async () => {
-      const data: SuccessTokenType | FailTokenType = await AuthApi.post.login(
-        username,
-        password,
-      );
+      const data:
+        | SuccessMessageType
+        | FailMessageType = await AuthApi.post.login(username, password);
 
-      if (!(data as FailTokenType).msg) {
-        const accessToken = (data as SuccessTokenType).accessToken;
-        const refreshToken = (data as SuccessTokenType).refreshToken;
+      if (data.err === 0) {
+        const accessToken = (data as SuccessMessageType).data.accessToken;
+        const refreshToken = (data as SuccessMessageType).data.refreshToken;
         authStore.setAccessToken(accessToken);
         authStore.setRefreshToken(refreshToken);
         authStore.setErrorCode(0);
         authStore.setErrorMessage('');
         navigation.navigate('Home');
       } else {
-        const err = (data as FailTokenType).err;
-        const msg = (data as FailTokenType).msg;
+        const err = data.err;
+        const msg = data.msg;
         authStore.setAccessToken('');
         authStore.setRefreshToken('');
         authStore.setErrorCode(err);

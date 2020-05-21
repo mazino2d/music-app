@@ -1,6 +1,7 @@
-import React, {FC} from 'react';
+import React, {FC, useContext} from 'react';
 import {Text} from 'react-native';
 import {LyricWordType} from 'src/service/playlist';
+import {playlistContext} from '../../../store/playlist';
 import {lyricSentenceStyles} from '../../../theme/dark';
 import {Level} from './level';
 import Word from './word';
@@ -12,8 +13,15 @@ export interface SentenceProps {
 }
 
 const Sentence: FC<SentenceProps> = (props) => {
+  const playlistStore = useContext(playlistContext);
+  if (!playlistStore) return <></>;
+
+  const startTime = props.sentence[0].startTime / 1000;
+
   return (
-    <Text style={lyricSentenceStyles.sentense}>
+    <Text
+      style={lyricSentenceStyles.sentense}
+      onPress={() => playlistStore.seekBySecond(startTime)}>
       {props.sentence.map((value: LyricWordType, index: number) => {
         let level = Level.LOW;
 

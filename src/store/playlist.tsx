@@ -6,8 +6,6 @@ import SongApi, {
   LyricType,
 } from '../service/playlist';
 
-const host = 'https://zmediadata.zingmp3.vn/spleeter/res';
-
 interface PlaylistContext {
   playlist: InfoMediaType[];
   selectedSong: number;
@@ -23,7 +21,8 @@ interface PlaylistContext {
   onPressShuffleOn: () => void;
   onPressNextTrack: () => void;
   onPressBackTrack: () => void;
-  onPressSeek: (value: number) => void;
+  seekByPercent: (value: number) => void;
+  seekBySecond: (second: number) => void;
   setPlaylist: React.Dispatch<React.SetStateAction<InfoMediaType[]>>;
   setSelectedSong: React.Dispatch<React.SetStateAction<number>>;
   setIsBeat: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,23 +42,6 @@ export const PlaylistProvider: FC = ({children}) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [isBeat, setIsBeat] = useState(false);
   const [lyric, setLyric] = useState<LyricType>();
-
-  useEffect(() => {
-    const song: InfoMediaType | undefined = playlist[selectedSong];
-
-    if (song) {
-      (async () => {
-        const data: LyricType = await SongApi.mGet.getLyric(song.idMedia);
-        data.listData.map(
-          (sentense: LyricSentenceType) =>
-            (sentense.listData[0].data =
-              sentense.listData[0].data.charAt(0).toUpperCase() +
-              sentense.listData[0].data.slice(1)),
-        ),
-          setLyric(data);
-      })();
-    }
-  }, []);
 
   useEffect(() => {
     const song: InfoMediaType | undefined = playlist[selectedSong];
@@ -128,9 +110,14 @@ export const PlaylistProvider: FC = ({children}) => {
     setPaused(false);
   };
 
-  const onPressSeek = (value: number) => {
+  const seekByPercent = (value: number) => {
     songRef.current?.seek(value * (duration + 1));
     beatRef.current?.seek(value * (duration + 1));
+  };
+
+  const seekBySecond = (sencond: number) => {
+    songRef.current?.seek(sencond);
+    beatRef.current?.seek(sencond);
   };
 
   return (
@@ -150,7 +137,8 @@ export const PlaylistProvider: FC = ({children}) => {
         onPressShuffleOn,
         onPressNextTrack,
         onPressBackTrack,
-        onPressSeek,
+        seekByPercent,
+        seekBySecond,
         setPlaylist,
         setSelectedSong,
         setIsBeat,
@@ -176,9 +164,7 @@ export const PlaylistProvider: FC = ({children}) => {
             playInBackground
             playWhenInactive
             ref={beatRef}
-            source={{
-              uri: `${host}?typeReq=get&id=${playlist[selectedSong].idMedia}&codec=mp3&typeSplit=beat`,
-            }}
+            source={{uri: playlist[selectedSong].linkBeat.link}}
             paused={paused}
             repeat={repeatOn === 2}
             muted={!isBeat}

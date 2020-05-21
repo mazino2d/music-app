@@ -5,7 +5,7 @@ const infoSrc = 'infoSrc=webZMD';
 export default {
   mGet: {
     getInfoMedia: async (listSongId: number[]) => {
-      const url = `${host}/song/mGetInfoMedia?isGetCover=1&listKey=${listSongId}&${infoSrc}`;
+      const url = `${host}/song/mGetInfoMedia?isGetCover=1&isGetLinkBeat=1&listKey=${listSongId}&${infoSrc}`;
       const {data} = await Axios.get(`${url}`);
       const result: InfoMediaType[] = data;
 
@@ -30,7 +30,13 @@ export interface InfoMediaType {
   listGenre: string[];
   listArtist: string[];
   link: string;
+  linkBeat: BeatType;
   cover: string;
+}
+
+export interface BeatType {
+  id: number;
+  link: string;
 }
 
 export interface LyricWordType {

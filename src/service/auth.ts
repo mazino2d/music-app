@@ -13,11 +13,11 @@ export default {
       };
       try {
         const {data} = await Axios.post(`${host}`, body);
-        const result: SuccessTokenType = data;
+        const result: SuccessMessageType = data;
 
         return result;
       } catch (error) {
-        const result: FailTokenType = JSON.parse(
+        const result: FailMessageType = JSON.parse(
           error.response.request._response,
         );
 
@@ -27,12 +27,18 @@ export default {
   },
 };
 
-export interface SuccessTokenType {
+export interface TokenType {
   accessToken: string;
   refreshToken: string;
 }
 
-export interface FailTokenType {
+export interface SuccessMessageType {
+  data: TokenType;
+  err: number;
+  msg: string;
+}
+
+export interface FailMessageType {
   err: number;
   msg: string;
 }
