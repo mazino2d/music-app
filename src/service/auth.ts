@@ -1,5 +1,7 @@
 import Axios from 'axios';
 const host = 'https://zmd.zingmp3.vn/api/v1';
+const devHost = 'http://localhost:9043/api/v1';
+const infoSrc = 'src=AppZMD';
 const clientId =
   '04849E02E202B05569C3E8994C3C7C5B1F72D3E89D89D9873CF4F01DA3DC115D';
 
@@ -12,7 +14,7 @@ export default {
         password,
       };
       try {
-        const {data} = await Axios.post(`${host}/auth/pwd`, body);
+        const {data} = await Axios.post(`${host}/auth/pwd?${infoSrc}`, body);
         const result: SuccessMessageType = data;
 
         return result;
@@ -30,7 +32,7 @@ export default {
         refreshToken,
       };
 
-      const {data} = await Axios.post(`${host}/auth/token`, body);
+      const {data} = await Axios.post(`${host}/auth/token?${infoSrc}`, body);
       const result: TokenType = data;
 
       return result;

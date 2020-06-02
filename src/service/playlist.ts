@@ -1,21 +1,22 @@
-import ZAxios from '../utils/zaxios';
+import ZAxios from './zaxios';
 
 const host = 'https://zmd.zingmp3.vn/api/v1';
-const infoSrc = 'infoSrc=webZMD';
+const devHost = 'http://localhost:9043/api/v1';
+const infoSrc = 'src=AppZMD';
 
 export default {
   mGet: {
     getInfoMedia: async (listSongId: number[]) => {
-      const url = `${host}/song/getMediaInfo?ids=${listSongId}&fields=cover,link,listArtist,listGenre,linkBeat`;
+      const url = `${host}/songs?ids=${listSongId}&fields=id,title,cover,link,listArtist,listGenre,linkBeat&${infoSrc}`;
       const {data} = await ZAxios.get(`${url}`);
       const result: InfoMediaType[] = data;
 
       return result;
     },
     getLyric: async (songId: number) => {
-      const url = `${host}/song/lyric?typeReq=get&ids=${songId}&${infoSrc}`;
+      const url = `${host}/songs?ids=${songId}&fields=lyric&${infoSrc}`;
       const {data} = await ZAxios.get(`${url}`);
-      const result: LyricType = data[0];
+      const result: LyricType = data[0].lyric;
 
       return result;
     },
@@ -23,11 +24,8 @@ export default {
 };
 
 export interface InfoMediaType {
-  idMedia: number;
-  isOfficial: number;
+  id: number;
   title: string;
-  listIdArtist: number[];
-  listIdGenre: number[];
   listGenre: string[];
   listArtist: string[];
   link: string;
